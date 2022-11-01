@@ -1,0 +1,22 @@
+body {
+  color: #5d5d5d;
+}
+.top {
+  padding: 0 25px 0 25px;
+  color: #1b8ebf;
+}
+.floatRight {
+  float: right;
+  border: 2px solid white;
+  padding: 1px;
+}
+.floatLeft {
+  float: left;
+}
+.content {
+  margin-top: 96px;
+}
+hr {
+  visibility: hidden;
+  margin: 0%;
+}
