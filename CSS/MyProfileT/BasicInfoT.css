@@ -1,0 +1,21 @@
+/* .body {
+  display: flex;
+  width: 70%;
+} */
+.Lcol {
+  width: 40%;
+  margin: 5%;
+  float: left;
+}
+.Rcol {
+  width: 40%;
+  margin: 5%;
+  float: left;
+}
+.btn {
+  display: block;
+  background-color: #4caf50;
+  color: azure;
+  padding: 7px 90px;
+  margin-top: 31px;
+}

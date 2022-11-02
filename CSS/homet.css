@@ -1,5 +1,5 @@
 body {
-  margin: 0;
+  margin: 0px;
 }
 .top {
   display: flex;
@@ -39,7 +39,11 @@ body {
 .bottom {
   width: 80%;
   text-align: center;
+  height: 90px;
   margin: 0 auto;
-  margin-top: 50px;
-  border-top: 1.5px solid #407bae91;
+  margin-top: 90px;
+  overflow: hidden;
+}
+.bb {
+  border: 0.5px solid #407bae91;
 }
