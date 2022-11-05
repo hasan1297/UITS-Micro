@@ -1,0 +1,37 @@
+.container {
+  display: Flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 330px;
+  width: 100%;
+  margin: 9% auto;
+}
+.img {
+  display: Flex;
+  justify-content: center;
+  margin-bottom: 24px !important;
+}
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+.form-group {
+  width: 100%;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.rm {
+  margin-left: 55%;
+}
+.button {
+  margin-top: 35px;
+  margin-left: 50px;
+  padding: 9px 70px;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+}
+.kk {
+  text-align: center;
+  font-size: 13px;
+}
