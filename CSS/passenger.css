@@ -1,0 +1,23 @@
+body {
+  font-size: 14px;
+}
+.alert {
+  margin-left: auto;
+  margin-right: auto;
+}
+.body {
+  margin-top: -25px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.btnS {
+  padding: 0.25rem 0.5rem;
+  font-size: 14px;
+  line-height: 1.7;
+  border-radius: 0.2rem;
+  float: right;
+  margin-right: 60px;
+  background-color: #007bff;
+  border: 0;
+  color: white;
+}

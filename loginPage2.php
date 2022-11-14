@@ -18,6 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         session_start();
         $_SESSION['loggedin'] = true;
         $_SESSION['loginID'] = $LoginId;
+        $_SESSION['name'] = $name;
         header("location: MyInfo.php");
       }
       else{
@@ -41,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           header("location: myInfoBT.php");
         }
         else{
-        $showError = "Invalid credentials."; 
+          $showError = "Invalid credentials."; 
         }
       }
     }
@@ -55,8 +56,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // $login = true;
             session_start();
             $_SESSION['loggedin'] = true;
-            $_SESSION['loginId'] = $LoginId;
-            header("location: myInfoBD.php");
+            $_SESSION['loginID'] = $LoginId;
+            $_SESSION['busNo'] = $row['busNo'];
+            $_SESSION['shift'] = $row['shift'];
+            header("location: myInfoBT.php");
           }
           else{
           $showError = "Invalid credentials."; 

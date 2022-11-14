@@ -1,6 +1,7 @@
 body {
   margin: 0px;
-  min-width: 980px;
+  min-width: 1000px;
+  font-size: 14px;
 }
 .top {
   display: flex;
@@ -55,6 +56,7 @@ body {
   margin: 0 auto;
   margin-top: 90px;
   overflow: hidden;
+  margin-bottom: 40px;
 }
 .bb {
   border: 0.5px solid #407bae91;

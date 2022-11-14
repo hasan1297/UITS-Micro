@@ -9,3 +9,41 @@
         </select>
     </form>
 </div>
+
+ALTER TABLE `dcontactinfo` ADD FOREIGN KEY (`loginIdD`) REFERENCES `dlogin`(`loginIdD`) ON DELETE CASCADE ON UPDATE
+CASCADE;
+
+<div class="body" style="max-width: 900px;">
+    <div class="container my-4">
+        <h5 class="h5 mb-3">Your passengers for the day:</h5>
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>SN.</th>
+                    <th>Name</th>
+                    <th>Dept</th>
+                    <th>Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- php MySQL query -->
+                <?php
+                    $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '{$_SESSION['busNo']}' AND `weekName` LIKE 'monday' AND `time` LIKE '{$_SESSION['shift']}' ";
+                    $result = mysqli_query($conn,$sql);
+                    $num = mysqli_num_rows($result);
+                    $sn = 0;
+                    while($row = mysqli_fetch_assoc($result)){
+                        $sn = $sn + 1;
+                        echo   "<tr>
+                                    <th scope='row'>". $sn. "</th>
+                                    <td>". $row['name']. "</td>
+                                    <td>". $row['dept']. "</td>
+                                    <td>". $row['mobile']. "</td>
+                                </tr>";
+                    }
+                ?>
+            </tbody>
+        </table>
+        <button class='delete btnS btn-sm btn-primary'>Delete</button>
+    </div>
+</div>

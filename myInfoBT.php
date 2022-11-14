@@ -1,42 +1,62 @@
 <?php
 
-include 'partials/_dbconnect.php';
-session_start();
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
-  header("location: loginPage2.php");
-  exit;
-}
+  include 'partials/_dbconnect.php';
+  session_start();
+  if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
+    header("location: loginPage2.php");
+    exit;
+  }
+
+?>
+
+<?php
+
+  ////    selecting user    ////
+  require 'partials/_user.php';
+
+  $showAlert = false;
+  if(isset($_POST['submit'])){
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $DoB = mysqli_real_escape_string($conn, $_POST['dateOfBirth']);
+    $BG = mysqli_real_escape_string($conn, $_POST['bloodGroup']);
+    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
+    $shift = mysqli_real_escape_string($conn, $_POST['DayEvening']);
+    $MS = mysqli_real_escape_string($conn, $_POST['maritalStatus']);
+    $religion = mysqli_real_escape_string($conn, $_POST['religion']);
+    $nationality = mysqli_real_escape_string($conn, $_POST['nationality']);
+    $nid = mysqli_real_escape_string($conn, $_POST['nid']);
+
+    if($teacher){
+      $sql = "UPDATE `basicinfot` SET `name` = '$name', `DoB` = '$DoB', `BG` = '$BG', `gender` = '$gender', `shift` = '$shift', `MS` = '$MS', `religion` = '$religion', `nationality` = '$nationality', `nid` = '$nid' WHERE `basicinfot`.`loginIdT` = '{$_SESSION['loginID']}' ";
+    }
+    if($driver){
+      $sql = "UPDATE `basicinfod` SET `name` = '$name', `DoB` = '$DoB', `BG` = '$BG', `gender` = '$gender', `shift` = '$shift', `MS` = '$MS', `religion` = '$religion', `nationality` = '$nationality', `nid` = '$nid' WHERE `basicinfod`.`loginIdD` = '{$_SESSION['loginID']}' ";
+    }
+
+    $result = mysqli_query($conn, $sql);
+    if($result){
+      $showAlert = true;
+    }
+    else{
+      echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> Try again later.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>';
+    }
+  }
 
 ?>
 <?php
-$showAlert = false;
-if(isset($_POST['submitT'])){
-
-  $name = mysqli_real_escape_string($conn, $_POST['nameT']);
-  $DoB = mysqli_real_escape_string($conn, $_POST['dateOfBirthT']);
-  $BG = mysqli_real_escape_string($conn, $_POST['bloodGroupT']);
-  $gender = mysqli_real_escape_string($conn, $_POST['genderT']);
-  $shift = mysqli_real_escape_string($conn, $_POST['DayEveningT']);
-  $MS = mysqli_real_escape_string($conn, $_POST['maritalStatusT']);
-  $religion = mysqli_real_escape_string($conn, $_POST['religionT']);
-  $nationality = mysqli_real_escape_string($conn, $_POST['nationalityT']);
-  $nid = mysqli_real_escape_string($conn, $_POST['nidT']);
-
-  // $sql = "UPDATE `tlogin` (name, DoB, BG, gender, shift, MS, religion, nationality, nid) VALUES('$name', '$DoB', '$BG', '$gender', '$shift', '$MS', '$religion', '$nationality', '$nid')  WHERE `tlogin`.`loginIdT` = '{$_SESSION['loginID']}' ";
-  $sql = "UPDATE `tlogin` SET `name` = '$name', `DoB` = '$DoB', `BG` = '$BG', `gender` = '$gender', `shift` = '$shift', `MS` = '$MS', `religion` = '$religion', `nationality` = '$nationality', `nid` = '$nid' WHERE `tlogin`.`loginIdT` = '{$_SESSION['loginID']}' ";
-  $result = mysqli_query($conn, $sql);
-  if($result){
-    $showAlert = true;
-  }
-  else{
-    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <strong>Error!</strong> Try again later.
+  if($showAlert){
+    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Success!</strong> Your Profile have been Updated.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>';
   }
-}
 
 ?>
 <!DOCTYPE html>
@@ -60,51 +80,22 @@ if(isset($_POST['submitT'])){
     <link rel="stylesheet" href="CSS/MyProfileT/MyInfoT.css" />
     <link rel="stylesheet" href="CSS/MyProfileT/BasicInfoT.css" />
 
-    <title>Hello, world!</title>
+    <title>My Info</title>
   </head>
   <body id="Mb">
+
+    <!-- css first -->
     <script>0</script>
-    <?php
-      if($showAlert){
-        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-              <strong>Success!</strong> Your Profile have been Updated.
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>';
-      }
-    ?>
-    <header>
-      <div class="top">
-        <div class="top left"><img src="pic/bannerT.png" alt="" /></div>
-        <div class="top right" >
-          <div class="top midR" >
-            <?php echo $_SESSION['name']."<br>"?>
-            <?php echo $_SESSION['loginID']."<br>"?>
-            <a href="/Isp/logout.php"><strong>Log out</strong></a>
-          </div>
-          <img src="pic/avaterT.png" height="91px" width="91px" />
-        </div>
-      </div>
-      <nav class="navbar">
-        <ul>
-          <li><a href="/Home.html">Home</a></li>
-          <li><a href="/MicroInfo.html">Micro Info</a></li>
-          <li><a href="/BookMicro.html">Book Micro</a></li>
-          <li><a href="/MyInfoT.html">My Profile</a></li>
-          <li><a href="/Isp/logout.php">Log out</a></li>
-        </ul>
-      </nav>
-    </header>
-    <nav class="Pnavbar">
+
+    <!-- Header -->
+    <?php require 'partials/_navtop.php'?>
+
+    <nav class="Pnavbar mb-5">
       <ul>
-        <li><a class="active" href="/MyInfoT.html">Basic Information</a></li>
-        <li><a href="/MyProfileT/FamilyInfoT.html">Family Information</a></li>
-        <li><a href="/MyProfileT/ContactInfoT.html">Contact Information</a></li>
-        <li><a href="/MyProfileT/Post&EduInfo.html">
-          Post &amp; Educational Info</a
-          >
-        </li>
+        <li><a class="active" href="isp/MyInfoT.php">Basic Information</a></li>
+        <!-- <li><a href="T_familyinfo.php">Family Information</a></li> -->
+        <li><a href="T_contactinfo.php">Contact Information</a></li>
+        <li><a href="T_post&eduinfo.php">Post &amp; Educational Info</a></li>
       </ul>
     </nav>
 
@@ -114,35 +105,41 @@ if(isset($_POST['submitT'])){
       <!-- Left Side Form -->
       <form action="" method="post">
         <?php
-          $sql = "SELECT * FROM `tlogin` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
+        if($teacher){
+          $sql = "SELECT * FROM `basicinfot` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
+        }
+        if($driver){
+          $sql = "SELECT * FROM `basicinfod` WHERE `loginIdD` = '{$_SESSION['loginID']}'";
+        }
           $result = mysqli_query($conn,$sql);
           if(mysqli_num_rows($result) > 0){
             while($row = mysqli_fetch_assoc($result)){
+        
         ?>
-            <div class="Lcol">
+            <div class="Lcol mt-5">
               <div>
-                <label for="nameT">Name <span style="color: red"> *</span></label>
-                <input type="text" name="nameT" class="form-control" id="nameT" value="<?php echo $row['name']; ?>"/>
+                <label for="name">Name <span style="color: red"> *</span></label>
+                <input type="text" name="name" class="form-control" id="name" value="<?php echo $row['name']; ?>"/>
               </div>
               <div>
-                <label for="dateOfBirthT"
+                <label for="dateOfBirth"
                   >Date of Birth <span style="color: red"> *</span>
                 </label>
                 <input
                   type="date"
-                  name="dateOfBirthT"
+                  name="dateOfBirth"
                   class="form-control"
-                  id="dateOfBirthT"
+                  id="dateOfBirth"
                   value="<?php echo $row['DoB']; ?>"
                 />
               </div>
               <div>
-                <label for="bloodGroupT">Blood Group </label>
+                <label for="bloodGroup">Blood Group </label>
                 <select
                   type="select"
-                  name="bloodGroupT"
+                  name="bloodGroup"
                   class="form-control"
-                  id="bloodGroupT"
+                  id="bloodGroup"
                 >
                   <option selected value="<?php echo $row['BG']; ?>"><?php echo $row['BG']; ?></option>
                   <option value="-select-">-select-</option>
@@ -157,14 +154,14 @@ if(isset($_POST['submitT'])){
                 </select>
               </div>
               <div>
-                <label for="genderT"
+                <label for="gender"
                   >Gender <span style="color: red"> *</span>
                 </label>
                 <select
                   type="select"
-                  name="genderT"
+                  name="gender"
                   class="form-control"
-                  id="genderT"
+                  id="gender"
                 >
                   <option selected value="<?php echo $row['gender']; ?>"><?php echo $row['gender']; ?></option>
                   <option value="Male">Male</option>
@@ -173,14 +170,14 @@ if(isset($_POST['submitT'])){
                 </select>
               </div>
               <div>
-                <label for="DayEveningT"
+                <label for="DayEvening"
                   >Day/Evening <span style="color: red"> *</span>
                 </label>
                 <select
                   type="select"
-                  name="DayEveningT"
+                  name="DayEvening"
                   class="form-control"
-                  id="DayEveningT"
+                  id="DayEvening"
                 >
                   <option selected value="<?php echo $row['shift']; ?>"><?php echo $row['shift']; ?></option>
                   <option value="Day">Day</option>
@@ -190,15 +187,14 @@ if(isset($_POST['submitT'])){
             </div>
 
             <!-- Right Side Form -->
-            <div class="Rcol">
+            <div class="Rcol mt-5">
               <div>
-                <label for="maritalStatusT">Marital Status </label>
+                <label for="maritalStatus">Marital Status </label>
                 <select
                   type="select"
-                  name="maritalStatusT"
+                  name="maritalStatus"
                   class="form-control"
-                  id="maritalStatusT"
-                  value=""
+                  id="maritalStatus"
                 >
                   <option selected value="<?php echo $row['MS']; ?>"><?php echo $row['MS']; ?></option>
                   <option value="-Select-">-Select</option>
@@ -207,12 +203,12 @@ if(isset($_POST['submitT'])){
                 </select>
               </div>
               <div>
-                <label for="religionT">Religion </label>
+                <label for="religion">Religion </label>
                 <select
                   type="select"
-                  name="religionT"
+                  name="religion"
                   class="form-control"
-                  id="religionT"
+                  id="religion"
                 >
                   <option selected value="<?php echo $row['religion']; ?>"><?php echo $row['religion']; ?></option>
                   <option value="Islam">Islam</option>
@@ -223,14 +219,14 @@ if(isset($_POST['submitT'])){
                 </select>
               </div>
               <div>
-                <label for="nationalityT"
+                <label for="nationality"
                   >Nationality <span style="color: red"> *</span>
                 </label>
                 <select
                   type="select"
-                  name="nationalityT"
+                  name="nationality"
                   class="form-control"
-                  id="nationalityT"
+                  id="nationality"
                 >
                   <option selected value="<?php echo $row['nationality']; ?>"><?php echo $row['nationality']; ?></option>
                   <option value="">Select Country</option>
@@ -435,8 +431,8 @@ if(isset($_POST['submitT'])){
                 </select>
               </div>
               <div>
-                <label for="nidT">NID</label>
-                <input type="text" name="nidT" class="form-control" id="nidT" value="<?php echo $row['nid']; ?>"/>
+                <label for="nid">NID</label>
+                <input type="text" name="nid" class="form-control" id="nid" value="<?php echo $row['nid']; ?>"/>
               </div>
               <?php
             }
@@ -445,9 +441,9 @@ if(isset($_POST['submitT'])){
               <div>
                 <input
                   type="submit"
-                  name="submitT"
+                  name="submit"
                   class="btn"
-                  id="submitT"
+                  id="submit"
                   value="Save"
                 />
               </div>
@@ -455,17 +451,9 @@ if(isset($_POST['submitT'])){
       </form>
     </div>
 
-    <!-- Footer -->
-    <footer>
-      <div class="bottom">
-        <div>
-          <hr class="bb" />
-          Powered by <b>Badhan Consultants Ltd</b><br />
-          Copyright © 2016 - <span id="ctl00_lblCurrentYear">2022</span> Badhan
-          Consultants Ltd. All rights reserved.
-        </div>
-      </div>
-    </footer>
+    <!-- footer -->
+    <?php require 'partials/_footer.php'?>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

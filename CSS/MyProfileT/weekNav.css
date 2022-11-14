@@ -1,0 +1,44 @@
+.week {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Pnavbar {
+  background-color: rgb(233, 233, 233);
+  padding: 0;
+  height: 45px;
+  margin-top: 60px;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 1200px;
+}
+.Pnavbar ul {
+  margin: 0;
+  padding-left: 0;
+  overflow: auto;
+}
+.Pnavbar li {
+  float: left;
+  list-style: none;
+}
+.Pnavbar li a {
+  padding: 12px 23px 12px 23px;
+  /* padding: 3px 3px; */
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+  display: block;
+}
+.Pnavbar li a:hover {
+  background-color: rgb(202, 201, 201);
+  border-radius: 4px;
+}
+.Pnavbar li a.active {
+  background-color: #963fbd;
+  color: azure;
+  border-radius: 4px;
+}

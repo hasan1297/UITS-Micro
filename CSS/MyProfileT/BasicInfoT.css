@@ -1,5 +1,5 @@
 body {
-  font-size: 13px;
+  font-size: 14px;
 }
 /* .h5 {
   padding: 10px;
@@ -7,6 +7,15 @@ body {
   margin-bottom: -35px;
   margin-left: 18px;
 } */
+.alert {
+  margin-left: auto;
+  margin-right: auto;
+}
+.body {
+  margin-top: -50px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .Lcol {
   width: 40%;
   margin: 5%;
@@ -16,6 +25,7 @@ body {
   width: 40%;
   margin: 5%;
   float: left;
+  /* margin-top: 0%; */
 }
 .btn {
   display: block;
