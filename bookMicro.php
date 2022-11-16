@@ -214,7 +214,7 @@ if(isset($_GET['delete'])){
                 while($row = mysqli_fetch_assoc($result)){
                   $sn = $sn + 1;
                   echo "<tr>
-                          <th scope='row'>". $sn. "</th>
+                          <td>". $sn. "</td>
                           <td>". $row['busNo']. "</td>
                           <td>". $row['weekName']. "</td>
                           <td>". $row['time']. "</td>

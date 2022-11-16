@@ -14,7 +14,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
   require 'partials/_user.php';
 
   $showAlert = false;
-  if(isset($_POST['submitT'])){
+  if(isset($_POST['submit'])){
 
     // $loginID = mysqli_real_escape_string($conn, $_POST['{$_SESSION['loggedin']}']);
     //$photo = mysqli_real_escape_string($conn, $_POST['photo']);
@@ -128,33 +128,46 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                 <input type="file" accept="image/*" name="photo" class="form-control" id="photo"/>
               </div>
               <!-- <img src="uploads/<?php //echo $row['photo'];?>" width="150px" height="auto" alt=""> -->
-              <div>
-                <label for="dept">Dept</label>
-                <input type="text" name="dept" class="form-control" id="dept"/>
-              </div>
+              <!-- <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" class="form-control" id="name"  value="<?php //echo $row['name']; ?>"/>
+              </div> -->
               <div>
                 <label for="post">Post</label>
                 <input type="text" name="post" class="form-control" id="post"/>
               </div>
-              <!-- <div>
-                <label for="mobile"><strong><?php //echo $row['mobile']; ?></strong> </label> -->
-                <!-- <input type="text" name="mobile" class="form-control" id="mobile" value="<?php //echo $row['mobile']; ?>"/> -->
+              <div>
+                <label for="dept">Dept</label>
+                <input type="text" name="dept" class="form-control" id="dept"/>
               </div>
               <!-- <div>
+                <label for="email">Mobile</label>
+                <input type="text" name="email" class="form-control" id="email" value="<?php //echo $row['email']; ?>"/>
+              </div>
+              <div>
                 <label for="email">Email</label>
                 <input type="email" name="email" class="form-control" id="email" value="<?php //echo $row['email']; ?>"/>
               </div> -->
             </div>
 
             <!-- Right Side Form -->
-            <div class="Rcol">
-              <!-- <div>
-                <label for="Amobile">Mobile (Alternative) </label>
-                <input type="text" name="Amobile" class="form-control" id="Amobile" value="<?php //echo $row['Amobile']; ?>"/>
+            <!-- <div class="Rcol">
+              <h5 class="h5">Educational Information:</h5>
+              <h6 class="h5 mb-3" style="color: lightgrey;">(From top degree to lower one)</h6>
+              <div>
+                <input type="text" name="degree1" class="form-control" ivalue="<?php //echo $row['Amobile']; ?>"/>
               </div>
               <div>
-                <label for="Aemail">Email (Alternative) </label>
-                <input type="email" name="Aemail" class="form-control" id="Aemail" value="<?php //echo $row['Aemail']; ?>"/>
+                <input type="text" name="degree2" class="form-control" value="<?php //echo $row['Aemail']; ?>"/>
+              </div>
+              <div>
+                <input type="text" name="degree3" class="form-control" value="<?php //echo $row['Aemail']; ?>"/>
+              </div>
+              <div>
+                <input type="text" name="degree4" class="form-control" value="<?php //echo $row['Aemail']; ?>"/>
+              </div>
+              <div>
+                <input type="text" name="degree5" class="form-control" value="<?php //echo $row['Aemail']; ?>"/>
               </div> -->
 
             <?php
@@ -164,13 +177,13 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
               <div>
                 <input
                   type="submit"
-                  name="submitT"
+                  name="submit"
                   class="btn"
-                  id="submitT"
+                  id="submit"
                   value="Save"
                 />
               </div>
-            </div>
+            <!-- </div> -->
       </form>
     </div>
 
