@@ -155,18 +155,63 @@ if ($result){
   echo "yes bookmicro<br>";
 }
 
+// microinfo
+$sql = "CREATE TABLE microinfo(
+sn INT(11) AUTO_INCREMENT PRIMARY KEY,
+loginIdD INT(10) NOT NULL,
+busNo    INT(11) NOT NULL,
+shift     VARCHAR(20) NOT NULL,
+root    TEXT NOT NULL,
+name     VARCHAR(50) NOT NULL,
+mobile  VARCHAR(20) NOT NULL
+)";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes microinfo<br>";
+}
+
 //  picpost
 $sql = "CREATE TABLE picpost
 (
 sn INT(11) AUTO_INCREMENT PRIMARY KEY,
 loginIdT INT(10) NOT NULL,
-photo   VARCHAR(255) NOT NULL,
-dept   VARCHAR(20) NOT NULL,
-post  VARCHAR(50) NOT NULL
+photo   VARCHAR(255) NOT NULL DEFAULT 'nn',
+name   VARCHAR(50) NOT NULL,
+dept   VARCHAR(50) NOT NULL,
+post  VARCHAR(50) NOT NULL,
+mobile  VARCHAR(20) NOT NULL,
+email  VARCHAR(50) NOT NULL,
+degree1  VARCHAR(255) NOT NULL,
+degree2 VARCHAR(255) NOT NULL,
+degree3  VARCHAR(255) NOT NULL,
+degree4  VARCHAR(255) NOT NULL,
+degree5  VARCHAR(255) NOT NULL
 )";
 $result = mysqli_query($conn,$sql);
 if ($result){
-  echo "yes picpost<br><br><br>connecting foreign keys--><br><br>";
+  echo "yes picpost<br>";
+}
+
+//  picpostd
+$sql = "CREATE TABLE picpostd
+(
+sn INT(11) AUTO_INCREMENT PRIMARY KEY,
+loginIdD INT(10) NOT NULL,
+photo   VARCHAR(255) NOT NULL DEFAULT 'nn',
+name   VARCHAR(50) NOT NULL,
+busNo   INT(11) NOT NULL,
+shift  VARCHAR(20) NOT NULL,
+mobile  VARCHAR(20) NOT NULL,
+email  VARCHAR(50) NOT NULL,
+degree1  VARCHAR(255) NOT NULL,
+degree2 VARCHAR(255) NOT NULL,
+degree3  VARCHAR(255) NOT NULL,
+degree4  VARCHAR(255) NOT NULL,
+degree5  VARCHAR(255) NOT NULL
+)";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes picpostd<br><br><br>connecting foreign keys--><br><br>";
 }
 
 
@@ -196,8 +241,30 @@ if ($result){
 $sql = "ALTER TABLE `dcontactinfo` ADD FOREIGN KEY (`loginIdD`) REFERENCES `dlogin`(`loginIdD`) ON DELETE CASCADE ON UPDATE CASCADE";
 $result = mysqli_query($conn,$sql);
 if ($result){
-  echo "yes  dcontactinfo and dlogin <br><br><br>changing the starting point of auto increment--><br><br>";
+  echo "yes  dcontactinfo and dlogin <br>";
 }
+
+////  picpost and tlogin
+$sql = "ALTER TABLE `picpost` ADD FOREIGN KEY (`loginIdT`) REFERENCES `tlogin`(`loginIdT`) ON DELETE CASCADE ON UPDATE CASCADE";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  picpost and tlogin <br>";
+}
+
+////  picpostd and dlogin
+$sql = "ALTER TABLE `picpostd` ADD FOREIGN KEY (`loginIdD`) REFERENCES `dlogin`(`loginIdD`) ON DELETE CASCADE ON UPDATE CASCADE";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  picpostd and dlogin <br>";
+}
+
+////  microinfo and dlogin
+$sql = "ALTER TABLE `microinfo` ADD FOREIGN KEY (`loginIdD`) REFERENCES `dlogin`(`loginIdD`) ON DELETE CASCADE ON UPDATE CASCADE";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  microinfo and dlogin <br><br><br>changing the starting point of auto increment--><br><br>";
+}
+
 
 
 ////  changing the starting point
@@ -225,7 +292,7 @@ if ($result){
 }
 
 //  dlogin
-$sql = "INSERT INTO `dlogin` (`loginIdD`, `busNo`, `shift`, `password`, `dt`) VALUES (NULL, '1', 'noon', '1234', current_timestamp()), (NULL, '1', 'afternoon', '1234', current_timestamp()), (NULL, '2', 'noon', '1234', current_timestamp()), (NULL, '2', 'afternoon', '1234', current_timestamp())";
+$sql = "INSERT INTO `dlogin` (`loginIdD`, `busNo`, `shift`, `password`, `dt`) VALUES (NULL, '1', 'Noon', '1234', current_timestamp()), (NULL, '2', 'Afternoon', '1234', current_timestamp()), (NULL, '3', 'Noon', '1234', current_timestamp()), (NULL, '4', 'Afternoon', '1234', current_timestamp())";
 $result = mysqli_query($conn,$sql);
 if ($result){
   echo "yes  dlogin 4 ids<br><br>";
@@ -246,7 +313,7 @@ if ($result){
 }
 
 //  basicinfod
-$sql = "INSERT INTO `basicinfod` (`sn`, `loginIdD`, `name`, `DoB`, `BG`, `gender`, `shift`, `MS`, `religion`, `nationality`, `nid`) VALUES (NULL, '14551001', 'Kala Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551002', 'Dhola Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551003', 'chan Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551004', 'Shona Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', '')";
+$sql = "INSERT INTO `basicinfod` (`sn`, `loginIdD`, `name`, `DoB`, `BG`, `gender`, `shift`, `MS`, `religion`, `nationality`, `nid`) VALUES (NULL, '14551001', 'Kala Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551002', 'Dhola Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551003', 'Chan Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551004', 'Shona Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', '')";
 $result = mysqli_query($conn,$sql);
 if ($result){
   echo "yes  basicinfod data<br>";
@@ -256,15 +323,39 @@ if ($result){
 $sql = "INSERT INTO `dcontactinfo` (`sn`, `loginIdD`, `mobile`, `email`, `Amobile`, `Aemail`) VALUES (NULL, '14551001', '01954563521', 'kala@gmail.com', '', ''), (NULL, '14551002', '01355662235', 'dhola@gmail.com', '', ''), (NULL, '14551003', '01614569852', 'chan@gmail.com', '', ''), (NULL, '14551004', '01987654321', 'shonamia@gmail.com', '', '')";
 $result = mysqli_query($conn,$sql);
 if ($result){
-  echo "yes  dcontactinfo data<br><br><br>Bookmicro data entry--><br><br>";
+  echo "yes  dcontactinfo data<br><br><br>microinfo data entry--><br>";
+}
+
+
+////  microinfo data entry
+$sql = "INSERT INTO `microinfo` (`sn`, `loginIdD`, `busNo`, `shift`, `root`, `name`, `mobile`) VALUES (NULL, '14551001', '1', 'Noon', '', 'Kala Mia', '01954563521'), (NULL, '14551002', '2', 'Afternoon', '', 'Dhola Mia', '01355662235'), (NULL, '14551003', '3', 'Noon', '', 'Chan Mia', '01614569852'), (NULL, '14551004', '4', 'Afternoon', '', 'Shona Mia', '01987654321')";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  microinfo data<br><br><br>Bookmicro data entry--><br>";
 }
 
 
 ////  Book Micro data entry
-$sql = "INSERT INTO `bookmicro` (`sn`, `loginIdT`, `name`, `dept`, `mobile`, `busNo`, `weekName`, `time`) VALUES (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Firoz Molla', '', '01645865215', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Adnan Shuvo', '', '01953124444', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Shahru Islam', '', '01756864455', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Ebrahim khan', '', '01325232456', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Jamil Coudhury', '', '01844445577', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Jobair Ahmed', '', '01866554499', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Monday', 'Afternoon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Monday', 'Afternoon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Monday', 'Afternoon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Monday', 'Afternoon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Tuesday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Tuesday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Tuesday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Tuesday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Wednesday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Wednesday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Wednesday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Wednesday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Thursday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Thursday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Thursday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Thursday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Friday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Friday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Friday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Friday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Saturday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Saturday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Saturday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Saturday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Sunday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Sunday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Sunday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Sunday', 'Noon')";
+$sql = "INSERT INTO `bookmicro` (`sn`, `loginIdT`, `name`, `dept`, `mobile`, `busNo`, `weekName`, `time`) VALUES (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Monday', 'Noon'), (NULL, '1914551002', 'Fahim Kamal', '', '01853152421', '1', 'Monday', 'Noon'), (NULL, '1914551003', 'Fahad Mia', '', '01823546855', '1', 'Monday', 'Noon'), (NULL, '1914551004', 'Shayan Tushar', '', '01753124586', '1', 'Monday', 'Noon'), (NULL, '1914551005', 'Firoz Molla', '', '01645865215', '1', 'Monday', 'Noon'), (NULL, '1914551006', 'Adnan Shuvo', '', '01953124444', '1', 'Monday', 'Noon'), (NULL, '1914551007', 'Shahru Islam', '', '01756864455', '1', 'Monday', 'Noon'), (NULL, '1914551008', 'Ebrahim khan', '', '01325232456', '1', 'Monday', 'Noon'), (NULL, '1914551009', 'Jamil Coudhury', '', '01844445577', '1', 'Monday', 'Noon'), (NULL, '1914551010', 'Jobair Ahmed', '', '01866554499', '1', 'Monday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '3', 'Tuesday', 'Noon'), (NULL, '1914551002', 'Fahim Kamal', '', '01853152421', '3', 'Tuesday', 'Noon'), (NULL, '1914551003', 'Fahad Mia', '', '01823546855', '3', 'Tuesday', 'Noon'), (NULL, '1914551004', 'Shayan Tushar', '', '01753124586', '3', 'Tuesday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '2', 'Wednesday', 'Afternoon'), (NULL, '1914551002', 'Fahim Kamal', '', '01853152421', '2', 'Wednesday', 'Afternoon'), (NULL, '1914551003', 'Fahad Mia', '', '01823546855', '2', 'Wednesday', 'Afternoon'), (NULL, '1914551004', 'Shayan Tushar', '', '01753124586', '2', 'Wednesday', 'Afternoon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '4', 'Thursday', 'Afternoon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '4', 'Thursday', 'Afternoon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '4', 'Thursday', 'Afternoon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '4', 'Thursday', 'Afternoon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Friday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Friday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Friday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Friday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Saturday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Saturday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Saturday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Saturday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', 'Sunday', 'Noon'), (NULL, '1914551001', 'Fahim Kamal', '', '01853152421', '1', 'Sunday', 'Noon'), (NULL, '1914551001', 'Fahad Mia', '', '01823546855', '1', 'Sunday', 'Noon'), (NULL, '1914551001', 'Shayan Tushar', '', '01753124586', '1', 'Sunday', 'Noon'), (NULL, '1914551005', 'Firoz Molla', '', '01645865215', '1', 'Tuesday', 'Noon'), (NULL, '1914551006', 'Adnan Shuvo', '', '01953124444', '1', 'Tuesday', 'Noon'), (NULL, '1914551007', 'Shahru Islam', '', '01756864455', '1', 'Tuesday', 'Noon'), (NULL, '1914551008', 'Ebrahim khan', '', '01325232456', '1', 'Tuesday', 'Noon'),(NULL, '1914551005', 'Firoz Molla', '', '01645865215', '1', 'Wednesday', 'Noon'), (NULL, '1914551006', 'Adnan Shuvo', '', '01953124444', '1', 'Wednesday', 'Noon'), (NULL, '1914551007', 'Shahru Islam', '', '01756864455', '1', 'Wednesday', 'Noon'), (NULL, '1914551008', 'Ebrahim khan', '', '01325232456', '1', 'Wednesday', 'Noon'),(NULL, '1914551005', 'Firoz Molla', '', '01645865215', '1', 'Thursday', 'Noon'), (NULL, '1914551006', 'Adnan Shuvo', '', '01953124444', '1', 'Thursday', 'Noon'), (NULL, '1914551007', 'Shahru Islam', '', '01756864455', '1', 'Thursday', 'Noon'), (NULL, '1914551008', 'Ebrahim khan', '', '01325232456', '1', 'Thursday', 'Noon')";
 $result = mysqli_query($conn,$sql);
 if ($result){
-  echo "yes  Book Micro data<br><br><br>";
+  echo "yes  Book Micro data<br><br><br>picpost data entry--><br>";
+}
+
+
+////  picpost data entry
+$sql = "INSERT INTO `picpost` (`sn`, `loginIdT`, `photo`, `name`, `dept`, `post`, `mobile`, `email`, `degree1`, `degree2`, `degree3`, `degree4`, `degree5`) VALUES (NULL, '1914551001', 'nn', 'Mahamudul Hasan Badhan', '', '', '01853438156', 'badhan@gmail.com', '', '', '', '', ''), (NULL, '1914551002', 'nn', 'Fahim Kamal', '', '', '01853152421', 'fahim@gmail.com', '', '', '', '', ''), (NULL, '1914551003', 'nn', 'Fahad Mia', '', '', '01823546855', 'fahad@gmail.com', '', '', '', '', ''), (NULL, '1914551004', 'nn', 'Shayan Tushar', '', '', '01753124586', 'tushar@gmail.com', '', '', '', '', ''), (NULL, '1914551005', 'nn', 'Firoz Molla', '', '', '01645865215', 'firoz@gmail.com', '', '', '', '', ''), (NULL, '1914551006', 'nn', 'Adnan Shuvo', '', '', '01953124444', 'adnan@gmail.com', '', '', '', '', ''), (NULL, '1914551007', 'nn', 'Shahru Islam', '', '', '01756864455', 'nayeem@gmail.com', '', '', '', '', ''), (NULL, '1914551008', 'nn', 'Ebrahim khan', '', '', '01325232456', 'ebrahim@gmail.com', '', '', '', '', ''), (NULL, '1914551009', 'nn', 'Jamil Coudhury', '', '', '01844445577', 'jamil@gmail.com', '', '', '', '', ''), (NULL, '1914551010', 'nn', 'Jobair Ahmed', '', '', '01866554499', 'jobair@gmail.com', '', '', '', '', ''), (NULL, '1914551011', 'nn', 'Sadman Khan', '', '', '01844444444', 'sadman@gmail.com', '', '', '', '', ''), (NULL, '1914551012', 'nn', 'Mithu Hossain', '', '', '01823325225', 'mithu@gmail.com', '', '', '', '', '')";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  picpost data<br><br><br>picpostd data entry--><br>";
+}
+
+
+////  picpostd data entry
+$sql = "INSERT INTO `picpostd` (`sn`, `loginIdD`, `photo`, `name`, `busNo`, `shift`, `mobile`, `email`, `degree1`, `degree2`, `degree3`, `degree4`, `degree5`) VALUES (NULL, '14551001', 'nn', 'Kala Mia', '1', 'Noon', '01954563521', 'kala@gmail.com', '', '', '', '', ''), (NULL, '14551002', 'nn', 'Dhola Mia 	', '2', 'Afternoon', '01355662235', 'dhola@gmail.com', '', '', '', '', ''), (NULL, '14551003', 'nn', 'Chan Mia', '3', 'Noon', '01614569852', 'chan@gmail.com', '', '', '', '', ''), (NULL, '14551004', 'nn', 'Shona Mia', '4', 'Afternoon', '01987654321', 'shonamia@gmail.com 	', '', '', '', '', '')";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  picpostd data<br><br><br>";
 }
 
 

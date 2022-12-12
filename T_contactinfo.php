@@ -22,9 +22,15 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     $Aemail = mysqli_real_escape_string($conn, $_POST['Aemail']);
 
     if($teacher){
+      $sql = "UPDATE `picpost` SET `mobile` = '$mobile', `email` = '$email' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
+      $result = mysqli_query($conn, $sql);
       $sql = "UPDATE `tcontactinfo` SET `mobile` = '$mobile', `email` = '$email', `Amobile` = '$Amobile', `Aemail` = '$Aemail' WHERE `tcontactinfo`.`loginIdT` = '{$_SESSION['loginID']}' ";
     }
     if($driver){
+      $sql = "UPDATE `picpostd` SET `mobile` = '$mobile', `email` = '$email' WHERE `picpostd`.`loginIdD` = '{$_SESSION['loginID']}' ";
+      $result = mysqli_query($conn, $sql);
+      $sql = "UPDATE `microinfo` SET `mobile` = '$mobile' WHERE `microinfo`.`loginIdD` = '{$_SESSION['loginID']}' ";
+      $result = mysqli_query($conn, $sql);
       $sql = "UPDATE `dcontactinfo` SET `mobile` = '$mobile', `email` = '$email', `Amobile` = '$Amobile', `Aemail` = '$Aemail' WHERE `dcontactinfo`.`loginIdD` = '{$_SESSION['loginID']}' ";
     }
     $result = mysqli_query($conn, $sql);

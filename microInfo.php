@@ -38,92 +38,106 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <?php require 'partials/_navtop.php'?>
 
     <!-- body -->
-    <div class="body">
+    <div class="body" style="max-width: 900px; margin-top: 0px;">
+
       <!-- Left Side Form -->
-      <form action="" method="post">
+      <div class="Lcol">
+        <div class="container my-4">
+          <table class="table" id="myTable">
+            <thead>
+              <tr>
+                <th>
+                  <h5 class="h5" style = "text-align: center;">At Noon:</h5>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <?php
+              $sql = "SELECT * FROM `microinfo` WHERE `shift` LIKE 'Noon'";
+              $result = mysqli_query($conn,$sql);
+              $sn = 1;
+              while($row = mysqli_fetch_assoc($result)){
+                if($row['busNo'] == $sn){
+                  $sn = $sn + 2;
+                  echo '<tr>
+                          <td align = "center" >
+                            <div>
+                            <label for="microNo"><span style="color: green"> Micro No:</span> </label><span style="color: red"><b>';?>
+                              <?php echo $row['busNo']. "<br>"; ?><?php echo '</b></span>
+                            </div>
+                            <div>
+                            <label for="root"><span style="color: green"> Root:</span> </label>';?>
+                              <?php echo $row['root']. "<br>"; ?><?php echo '
+                            </div>
+                            <div>
+                            <label for="driverName"><span style="color: green"> Drivers Name:</span> </label><b>';?>
+                              <?php echo $row['name']. "<br>"; ?><?php echo '</b>
+                            </div>
+                            <div>
+                            <label for="driverMobile"><span style="color: green"> Mobile:</span> </label><b>';?>
+                              <?php echo $row['mobile']. "<br>"; ?><?php echo '</b>
+                            </div>
+                          </td>
+                        </tr>';
+                  }
+                }
+              ?>
 
-
-        <div class="Lcol">
-          <!-- <h5 class="h5 mb-3">At Noon:</h5> -->
-          <!-- <div class="container my-4">
-            <table class="table" id="myTable">
-              <thead>
-                <tr>
-                  <th scope="col">
-                    <h5 class="h5 mb-3">At Noon:</h5>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <?php
-                  // $sql = "SELECT * FROM `bookmicro` WHERE `time` LIKE 'Noon' ";
-                  // $result = mysqli_query($conn,$sql);
-                  // // $num = mysqli_num_rows($result);
-                  // while($row = mysqli_fetch_assoc($result)){
-                  //   echo '<tr>
-                  //           <td>
-                            
-                  //           </td>
-                  //         </tr>';
-                  // }
-                ?>
-
-              </tbody>
-            </table>
-          </div> -->
-
-
-          <div>
-            <label for="microNo">Micro No <span style="color: red"> *</span></label>
-            <input type="text" name="microNo" class="form-control" id="microNo" value="<?php echo $row['busNo']; ?>"/>
-          </div>
-          <div>
-            <label for="root">Root</label>
-            <input type="text" name="root" class="form-control" id="root" value="<?php //echo $row['']; ?>"/>
-          </div>
-          <div>
-            <label for="driverName">Drivers Name</label>
-            <input type="text" name="driverName" class="form-control" id="driverName" value="<?php echo $row['name']; ?>"/>
-          </div>
-          <div>
-            <label for="driverMobile">Mobile</label>
-            <input type="text" name="driverMobile" class="form-control" id="driverMobile" value="<?php echo $row['mobile']; ?>"/>
-          </div>
+            </tbody>
+          </table>
         </div>
+      </div>
 
-        <!-- Right Side Form -->
-        <div class="Rcol">
-          <h5 class="h5 mb-3">At Afternoon:</h5>
-          <div>
-            <label for="microNo">Micro No <span style="color: red"> *</span></label>
-            <input type="text" name="microNo" class="form-control" id="microNo" value="<?php echo $row['busNo']; ?>"/>
-          </div>
-          <div>
-            <label for="root">Root</label>
-            <input type="text" name="root" class="form-control" id="root" value="<?php //echo $row['']; ?>"/>
-          </div>
-          <div>
-            <label for="driverName">Drivers Name</label>
-            <input type="text" name="driverName" class="form-control" id="driverName" value="<?php echo $row['name']; ?>"/>
-          </div>
-          <div>
-            <label for="driverMobile">Mobile</label>
-            <input type="text" name="driverMobile" class="form-control" id="driverMobile" value="<?php echo $row['mobile']; ?>"/>
-          </div>
+      <!-- Right Side Form -->
+      <div class="Rcol">
+        <div class="container my-4">
+          <table class="table" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <h5 class="h5" style = "text-align: center;">At Afteroon:</h5>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
 
-          <!-- <div>
-            <input
-              type="submit"
-              name="submit"
-              class="btn"
-              id="submit"
-              value="Save"
-            />
-          </div> -->
+              <?php
+              $sql = "SELECT * FROM `microinfo` WHERE `shift` LIKE 'Afternoon'";
+              $result = mysqli_query($conn,$sql);
+              $sn = 2;
+              while($row = mysqli_fetch_assoc($result)){
+                if($row['busNo'] == $sn){
+                  $sn = $sn + 2;
+                  echo '<tr>
+                          <td align = "center" >
+                            <div>
+                            <label for="microNo"><span style="color: green"> Micro No:</span> </label><span style="color: red"><b>';?>
+                              <?php echo $row['busNo']. "<br>"; ?><?php echo '</b></span>
+                            </div>
+                            <div>
+                            <label for="root"><span style="color: green"> Root:</span> </label>';?>
+                              <?php echo $row['root']. "<br>"; ?><?php echo '
+                            </div>
+                            <div>
+                            <label for="driverName"><span style="color: green"> Drivers Name:</span> </label><b>';?>
+                              <?php echo $row['name']. "<br>"; ?><?php echo '</b>
+                            </div>
+                            <div>
+                            <label for="driverMobile"><span style="color: green"> Mobile:</span> </label><b>';?>
+                              <?php echo $row['mobile']. "<br>"; ?><?php echo '</b>
+                            </div>
+                          </td>
+                        </tr>';
+                }
+              }
+              ?>
 
+            </tbody>
+          </table>
         </div>
-      </form>
+      </div>
+
     </div>
 
     <!-- css first -->

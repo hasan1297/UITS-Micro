@@ -17,20 +17,25 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
   if(isset($_POST['submit'])){
 
     // $loginID = mysqli_real_escape_string($conn, $_POST['{$_SESSION['loggedin']}']);
-    //$photo = mysqli_real_escape_string($conn, $_POST['photo']);
-    $dept = mysqli_real_escape_string($conn, $_POST['dept']);
-    $post = mysqli_real_escape_string($conn, $_POST['post']);
-        $sql = "UPDATE `picpost` SET `dept` = '$dept', `post` = '$post' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
-        $result = mysqli_query($conn, $sql);
-        if($result){
-          $showAlert = true;
-        }
+    // $photo = mysqli_real_escape_string($conn, $_POST['photo']);
+    if($teacher){
+      $dept = mysqli_real_escape_string($conn, $_POST['dept']);
+      $post = mysqli_real_escape_string($conn, $_POST['post']);
+    }
+    $degree1 = mysqli_real_escape_string($conn, $_POST['degree1']);
+    $degree2 = mysqli_real_escape_string($conn, $_POST['degree2']);
+    $degree3 = mysqli_real_escape_string($conn, $_POST['degree3']);
+    $degree4 = mysqli_real_escape_string($conn, $_POST['degree4']);
+    $degree5 = mysqli_real_escape_string($conn, $_POST['degree5']);
+    // echo "<pre>";
+    // print_r($_FILES);
+    // echo "</pre>";
 
     if(isset($_FILES['photo'])){
       $photo_name = $_FILES['photo']['name'];
       $photo_tmp_name = $_FILES['photo']['tmp_name'];
       $photo_size = $_FILES['photo']['size'];
-      $photo_new_name = $rand() . $photo_name;
+      $photo_new_name = rand() . $photo_name;
       
       if($photo_size > 5242880){
         echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -41,19 +46,47 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
               </div>';
       }
       else{
-        $sql = "UPDATE `picpost` SET `photo` = '$photo_new_name', `dept` = '$dept', `post` = '$post' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
-        $result = mysqli_query($conn, $sql);
-        if($result){
-          $showAlert = true;
-          move_uploaded_file($photo_tmp_name, "uploads/" . $photo_new_name);
+        if(!empty($photo_name)){ //new image
+          if($teacher){
+          $sql = "UPDATE `picpost` SET `photo` = '$photo_new_name', `dept` = '$dept', `post` = '$post', `degree1` = '$degree1', `degree2` = '$degree2', `degree3` = '$degree3', `degree4` = '$degree4', `degree5` = '$degree5' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
+          }
+          if($driver){
+          $sql = "UPDATE `picpostd` SET `photo` = '$photo_new_name', `degree1` = '$degree1', `degree2` = '$degree2', `degree3` = '$degree3', `degree4` = '$degree4', `degree5` = '$degree5' WHERE `picpostd`.`loginIdD` = '{$_SESSION['loginID']}' ";
+          }
+          $result = mysqli_query($conn, $sql);
+          if($result){
+            $showAlert = true;
+            move_uploaded_file($photo_tmp_name, "uploads/" . $photo_new_name);
+          }
+          else{
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> Try again later.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>';
+          }
         }
-        else{
-          echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error!</strong> Try again later.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>';
+        else{ //no image
+          if($teacher){
+          $sql = "UPDATE `picpost` SET `dept` = '$dept', `post` = '$post', `degree1` = '$degree1', `degree2` = '$degree2', `degree3` = '$degree3', `degree4` = '$degree4', `degree5` = '$degree5' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
+          }
+          if($driver){
+          $sql = "UPDATE `picpostd` SET `degree1` = '$degree1', `degree2` = '$degree2', `degree3` = '$degree3', `degree4` = '$degree4', `degree5` = '$degree5' WHERE `picpostd`.`loginIdD` = '{$_SESSION['loginID']}' ";
+          }
+
+          $result = mysqli_query($conn, $sql);
+          if($result){
+            $showAlert = true;
+          }
+          else{
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Error!</strong> Try again later.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>';
+          }
         }
       }
     }
@@ -98,10 +131,10 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
   <body>
         <!-- css first -->
     <script>0</script>
-
+    
     <!-- Header -->
     <?php require 'partials/_navtop.php'?>
-
+    
     <nav class="Pnavbar">
       <ul>
         <li><a href="myinfoBT.php">Basic Information</a></li>
@@ -110,65 +143,84 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         <li><a class="active" href="T_post&eduinfo.php">Post &amp; Educational Info</a></li>
       </ul>
     </nav>
-
-        <!-- Body Content -->
-    <div class="body">
-      <!-- <h5 class="h5">Basic Information</h5> -->
+    
+    <!-- Body Content -->
+    <div class="body" style="max-width: 1200px;">
       <!-- Left Side Form -->
-      <form action="" method="post">
+      <form action="" method="post" enctype ="multipart/form-data" style="min-width: 1060px;">
         <?php
+        if($teacher){
           $sql = "SELECT * FROM `picpost` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
+        }
+        if($driver){
+          $sql = "SELECT * FROM `picpostd` WHERE `loginIdD` = '{$_SESSION['loginID']}'";
+        }
           $result = mysqli_query($conn,$sql);
           if(mysqli_num_rows($result) > 0){
             while($row = mysqli_fetch_assoc($result)){
-        ?>
+              ?>
             <div class="Lcol">
-              <div>
-                <label for="photo">Photo</label>
-                <input type="file" accept="image/*" name="photo" class="form-control" id="photo"/>
-              </div>
-              <!-- <img src="uploads/<?php //echo $row['photo'];?>" width="150px" height="auto" alt=""> -->
-              <!-- <div>
-                <label for="name">Name</label>
-                <input type="text" name="name" class="form-control" id="name"  value="<?php //echo $row['name']; ?>"/>
-              </div> -->
-              <div>
-                <label for="post">Post</label>
-                <input type="text" name="post" class="form-control" id="post"/>
+              <h5 class="h5">Picture & Post:</h5>
+              <div class="form-group2">
+                <label for="photo"><span style="color: black"><b>Photo:</b></span></label><br>
+                <img src="uploads/<?php echo $row['photo'];?>" width="150px" height="auto" alt="">
+                <input type="file" accept="image/*" name="photo" class="form-control" id="photo" value="<?php echo $row['photo']; ?>"/>
               </div>
               <div>
-                <label for="dept">Dept</label>
-                <input type="text" name="dept" class="form-control" id="dept"/>
+                <label for="name"><span style="color: black"><b>Name:</b></span> </label>
+              <?php echo $row['name']. "<br>"; ?>
               </div>
-              <!-- <div>
-                <label for="email">Mobile</label>
-                <input type="text" name="email" class="form-control" id="email" value="<?php //echo $row['email']; ?>"/>
+      <?php
+        if($teacher){
+          echo'<div class="form-group">
+                <label for="dept"><span style="color: black"><b>Post:</b></span></label>
+                <input type="text" name="post" class="form-control" id="post" value="'?><?php echo $row["post"]; ?><?php echo '"/>
+              </div>
+              <div class="form-group">
+                <label for="dept"><span style="color: black"><b>Dept:</b></span></label>
+                <input type="text" name="dept" class="form-control" id="dept" value="'?><?php echo $row["dept"]; ?><?php echo '"/>
+              </div>';
+        }
+      ?>
+      <?php
+        if($driver){
+        echo '<div>
+                <label for="busNo"><span style="color: black"><b>Bus No:</b></span> </label>'?><?php echo $row["busNo"]; ?><?php echo '
               </div>
               <div>
-                <label for="email">Email</label>
-                <input type="email" name="email" class="form-control" id="email" value="<?php //echo $row['email']; ?>"/>
-              </div> -->
+                <label for="Shift"><span style="color: black"><b>Shift:</b></span> </label>'?><?php echo $row["shift"]; ?><?php echo '
+              </div>';
+        }
+      ?>
+              <div>
+                <label for="mobile"><span style="color: black"><b>Mobile:</b></span> </label>
+              <?php echo $row['mobile']. "<br>"; ?>
+              </div>
+              <div>
+                <label for="email"><span style="color: black"><b>Email:</b></span> </label>
+              <?php echo $row['email']. "<br>"; ?>
+              </div>
             </div>
 
             <!-- Right Side Form -->
-            <!-- <div class="Rcol">
+            <div class="Rcol">
               <h5 class="h5">Educational Information:</h5>
-              <h6 class="h5 mb-3" style="color: lightgrey;">(From top degree to lower one)</h6>
-              <div>
-                <input type="text" name="degree1" class="form-control" ivalue="<?php //echo $row['Amobile']; ?>"/>
+              <h6 class="h6 mb-3" style="color: lightgrey;">(From top degree to lower one)</h6>
+              <div class="degree-group">
+                <input type="text" name="degree1" class="form-control" placeholder=" Top degree" value="<?php echo $row['degree1']; ?>"/>
               </div>
-              <div>
-                <input type="text" name="degree2" class="form-control" value="<?php //echo $row['Aemail']; ?>"/>
+              <div class="degree-group">
+                <input type="text" name="degree2" class="form-control" placeholder="2nd top degree" value="<?php echo $row['degree2']; ?>"/>
               </div>
-              <div>
-                <input type="text" name="degree3" class="form-control" value="<?php //echo $row['Aemail']; ?>"/>
+              <div class="degree-group">
+                <input type="text" name="degree3" class="form-control" placeholder="3rd top degree" value="<?php echo $row['degree3']; ?>"/>
               </div>
-              <div>
-                <input type="text" name="degree4" class="form-control" value="<?php //echo $row['Aemail']; ?>"/>
+              <div class="degree-group">
+                <input type="text" name="degree4" class="form-control" placeholder="4th top degree" value="<?php echo $row['degree4']; ?>"/>
               </div>
-              <div>
-                <input type="text" name="degree5" class="form-control" value="<?php //echo $row['Aemail']; ?>"/>
-              </div> -->
+              <div class="degree-group">
+                <input type="text" name="degree5" class="form-control" placeholder="5th top degree" value="<?php echo $row['degree5']; ?>"/>
+              </div>
 
             <?php
             }
@@ -183,7 +235,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                   value="Save"
                 />
               </div>
-            <!-- </div> -->
+            </div>
       </form>
     </div>
 

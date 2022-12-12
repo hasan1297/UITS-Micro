@@ -26,19 +26,23 @@ if(isset($_GET['delete'])){
     $mobile = $_POST['mobile'];
     $busNo = $_POST['busNo'];
     $weekName = $_POST['dotw'];
-    $time = $_POST['time'];
+    // time selecting
+    if($busNo%2==0){
+      $time='Afternoon';
+    }
+    else{
+      $time='Noon';
+    }
 
     $sql = "SELECT * FROM `bookmicro` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
     $result = mysqli_query($conn, $sql);
     $num = mysqli_num_rows($result);
     if($num > 0){
       while($row = mysqli_fetch_assoc($result)){
-        if($busNo == $row['busNo']){
-          if ($weekName== $row['weekName'] && $time == $row['time']){
+          if ($weekName== $row['weekName']){
             // $login = true;
             $dublicate = true;
           }
-        }
       }
     }
 
@@ -107,7 +111,7 @@ if(isset($_GET['delete'])){
         }
         if($dublicate){
           echo '<div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
-          <strong>Error!</strong> You have already booked.
+          <strong>Error!</strong> You have already booked on this day.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
           </button>
@@ -154,9 +158,10 @@ if(isset($_GET['delete'])){
             <select type="select" name="busNo" class="form-control" id="busNo">
               <!-- <option selected value="<?php //echo $row['BG']; ?>"><?php //echo $row['BG']; ?></option> -->
               <!-- <option value="-select-">-select-</option> -->
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              <option value="1">1 (Noon)</option>
+              <option value="2">2 (Afternoon)</option>
+              <option value="3">3 (Noon)</option>
+              <option value="4">4 (Afternoon)</option>
             </select>
           </div>
           <div>
@@ -173,15 +178,13 @@ if(isset($_GET['delete'])){
               <option value="Sunday">Sunday</option>
             </select>
           </div>
-          <div>
+          <!-- <div>
             <label for="time">Time</label>
             <select type="select" name="time" class="form-control" id="time">
-              <!-- <option selected value="<?php //echo $row['BG']; ?>"><?php //echo $row['BG']; ?></option> -->
-              <!-- <option value="-select-">-select-</option> -->
               <option selected value="Noon">Noon</option>
               <option value="Afternoon">Afternoon</option>
             </select>
-          </div>
+          </div> -->
           <div>
             <input type="submit" name="submitT" class="btnS" id="submitT" value="Submit" />
           </div>

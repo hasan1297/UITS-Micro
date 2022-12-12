@@ -25,11 +25,17 @@
     $religion = mysqli_real_escape_string($conn, $_POST['religion']);
     $nationality = mysqli_real_escape_string($conn, $_POST['nationality']);
     $nid = mysqli_real_escape_string($conn, $_POST['nid']);
-
+    
     if($teacher){
+      $sql = "UPDATE `picpost` SET `name` = '$name' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
+      $result = mysqli_query($conn, $sql);
       $sql = "UPDATE `basicinfot` SET `name` = '$name', `DoB` = '$DoB', `BG` = '$BG', `gender` = '$gender', `shift` = '$shift', `MS` = '$MS', `religion` = '$religion', `nationality` = '$nationality', `nid` = '$nid' WHERE `basicinfot`.`loginIdT` = '{$_SESSION['loginID']}' ";
     }
     if($driver){
+      $sql = "UPDATE `picpostd` SET `name` = '$name' WHERE `picpostd`.`loginIdD` = '{$_SESSION['loginID']}' ";
+      $result = mysqli_query($conn, $sql);
+      $sql = "UPDATE `microinfo` SET `name` = '$name' WHERE `microinfo`.`loginIdD` = '{$_SESSION['loginID']}' ";
+      $result = mysqli_query($conn, $sql);
       $sql = "UPDATE `basicinfod` SET `name` = '$name', `DoB` = '$DoB', `BG` = '$BG', `gender` = '$gender', `shift` = '$shift', `MS` = '$MS', `religion` = '$religion', `nationality` = '$nationality', `nid` = '$nid' WHERE `basicinfod`.`loginIdD` = '{$_SESSION['loginID']}' ";
     }
 
