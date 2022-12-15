@@ -263,3 +263,5 @@ if(isset($_GET['delete'])){
   </body>
 
 </html>
+
+value="<?php echo date('Y-m-d'); ?>"

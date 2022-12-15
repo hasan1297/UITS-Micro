@@ -83,8 +83,8 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="CSS/homet2.css" />
-    <link rel="stylesheet" href="CSS/MyProfileT/MyInfoT.css" />
-    <link rel="stylesheet" href="CSS/MyProfileT/BasicInfoT.css" />
+    <link rel="stylesheet" href="CSS/MyProfileNav.css" />
+    <link rel="stylesheet" href="CSS/MyProfileBody.css" />
 
     <title>My Info</title>
   </head>
@@ -99,14 +99,13 @@
     <nav class="Pnavbar mb-5">
       <ul>
         <li><a class="active" href="isp/MyInfoT.php">Basic Information</a></li>
-        <!-- <li><a href="T_familyinfo.php">Family Information</a></li> -->
         <li><a href="T_contactinfo.php">Contact Information</a></li>
         <li><a href="T_post&eduinfo.php">Post &amp; Educational Info</a></li>
       </ul>
     </nav>
 
     <!-- Body Content -->
-    <div class="body">
+    <div class="body" style="max-width: 1200px;">
       <!-- <h5 class="h5">Basic Information</h5> -->
       <!-- Left Side Form -->
       <form action="" method="post">
@@ -122,7 +121,7 @@
             while($row = mysqli_fetch_assoc($result)){
         
         ?>
-            <div class="Lcol mt-5">
+            <div class="Lcol mt-4">
               <div>
                 <label for="name">Name <span style="color: red"> *</span></label>
                 <input type="text" name="name" class="form-control" id="name" value="<?php echo $row['name']; ?>"/>
@@ -193,7 +192,7 @@
             </div>
 
             <!-- Right Side Form -->
-            <div class="Rcol mt-5">
+            <div class="Rcol mt-4">
               <div>
                 <label for="maritalStatus">Marital Status </label>
                 <select

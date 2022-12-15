@@ -50,6 +50,7 @@ echo '<script>0</script>
             <li><a href="/isp/Home.php">Home</a></li>';
     if($driver){
       echo '<li><a href="/isp/passenger.php">Passenger</a></li>';
+      echo '<li><a href="/isp/myAccount.php">My Account</a></li>';
     }
     if($teacher){
       echo '<li><a href="/isp/MicroInfo.php">Micro Info</a></li>

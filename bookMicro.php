@@ -25,7 +25,8 @@ if(isset($_GET['delete'])){
     $name = $_POST['name'];
     $mobile = $_POST['mobile'];
     $busNo = $_POST['busNo'];
-    $weekName = $_POST['dotw'];
+    // $weekName = $_POST['dotw'];
+    $date = $_POST['date'];
     // time selecting
     if($busNo%2==0){
       $time='Afternoon';
@@ -34,27 +35,55 @@ if(isset($_GET['delete'])){
       $time='Noon';
     }
 
+    // $sql = "SELECT * FROM `bookmicro` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
+    // $result = mysqli_query($conn, $sql);
+    // $num = mysqli_num_rows($result);
+    // if($num > 0){
+    //   while($row = mysqli_fetch_assoc($result)){
+    //       if ($weekName== $row['weekName']){
+    //         // $login = true;
+    //         $dublicate = true;
+    //       }
+    //   }
+    // }
+
     $sql = "SELECT * FROM `bookmicro` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
     $result = mysqli_query($conn, $sql);
     $num = mysqli_num_rows($result);
     if($num > 0){
       while($row = mysqli_fetch_assoc($result)){
-          if ($weekName== $row['weekName']){
+          if ($date== $row['date']){
             // $login = true;
             $dublicate = true;
           }
       }
     }
 
+    // if(!$dublicate){
+    //   ////  checking if seat is available  ////
+    //   $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '$busNo' AND `weekName` LIKE '$weekName' AND `time` LIKE '$time' ";
+    //   $result = mysqli_query($conn, $sql);
+    //   $num = mysqli_num_rows($result);
+
+    //   if($num < 10){
+    //     ////  book seat  ////
+    //     $sql ="INSERT INTO `bookmicro` (`loginIdT`, `name`, `mobile`, `busNo`, `weekName`, `time`) VALUES ('{$_SESSION['loginID']}', '$name', '$mobile', '$busNo', '$weekName', '$time')";
+    //     $result = mysqli_query($conn, $sql);
+    //     $booked = true;
+    //   }
+    //   else{
+    //     $noseat = true;  // No seat
+    //   }   
+    // }
     if(!$dublicate){
       ////  checking if seat is available  ////
-      $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '$busNo' AND `weekName` LIKE '$weekName' AND `time` LIKE '$time' ";
+      $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '$busNo' AND `date` LIKE '$date' AND `time` LIKE '$time' ";
       $result = mysqli_query($conn, $sql);
       $num = mysqli_num_rows($result);
 
       if($num < 10){
         ////  book seat  ////
-        $sql ="INSERT INTO `bookmicro` (`loginIdT`, `name`, `mobile`, `busNo`, `weekName`, `time`) VALUES ('{$_SESSION['loginID']}', '$name', '$mobile', '$busNo', '$weekName', '$time')";
+        $sql ="INSERT INTO `bookmicro` (`loginIdT`, `name`, `mobile`, `busNo`, `date`, `time`) VALUES ('{$_SESSION['loginID']}', '$name', '$mobile', '$busNo', '$date', '$time')";
         $result = mysqli_query($conn, $sql);
         $booked = true;
       }
@@ -95,33 +124,33 @@ if(isset($_GET['delete'])){
       <?php
         if($noseat){
           echo '<div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
-          <strong>Error!</strong> No seat left in the Micro on this day and time. Please choose another day or time!
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-          </div>';
+                  <strong>Error!</strong> No seat left in the Micro on this day and time. Please choose another day or time!
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>';
         }
         if($booked){
           echo '<div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-          <strong>Success!</strong> Your seat have been booked.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-          </div>';
+                  <strong>Success!</strong> Your seat have been booked.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>';
         }
         if($dublicate){
           echo '<div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
-          <strong>Error!</strong> You have already booked on this day.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-          </div>';
+                  <strong>Error!</strong> You have already booked on this day.
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>';
         }
         if($delete){
           echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
                   <strong>Success!</strong> Your note has been deleteded successfully!
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                   </button>
                 </div>';
         }
@@ -133,6 +162,7 @@ if(isset($_GET['delete'])){
       <div class="Lcol">
         <form action="/isp/bookMicro.php" method="post">
           <h5 class="h5 mb-3">Book your seat:</h5>
+          <h6><span style="color: red">Booking cancelation must be done atleast 1 hour before departure !!!</span></h6>
           <?php
             $sql = "SELECT * FROM `basicinfot` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
             $result = mysqli_query($conn,$sql);
@@ -165,26 +195,28 @@ if(isset($_GET['delete'])){
             </select>
           </div>
           <div>
-            <label for="dotw">Day of the Week</label>
-            <select type="select" name="dotw" class="form-control" id="dotw">
+            <!-- <label for="dotw">Day of the Week</label>
+            <select type="select" name="dotw" class="form-control" id="dotw"> -->
               <!-- <option selected value="<?php //echo $row['BG']; ?>"><?php //echo $row['BG']; ?></option> -->
               <!-- <option value="-select-">-select-</option> -->
-              <option selected value="Monday">Monday</option>
+              <!-- <option selected value="Monday">Monday</option>
               <option value="Tuesday">Tuesday</option>
               <option value="Wednesday">Wednesday</option>
               <option value="Thursday">Thursday</option>
               <option value="Friday">Friday</option>
               <option value="Saturday">Saturday</option>
               <option value="Sunday">Sunday</option>
-            </select>
+            </select> -->
           </div>
-          <!-- <div>
-            <label for="time">Time</label>
-            <select type="select" name="time" class="form-control" id="time">
-              <option selected value="Noon">Noon</option>
-              <option value="Afternoon">Afternoon</option>
-            </select>
-          </div> -->
+          <div>
+            <label for="date">Select date:</label>
+            <input
+              type="date"
+              name="date"
+              class="form-control"
+              id="date"
+              required>
+          </div>
           <div>
             <input type="submit" name="submitT" class="btnS" id="submitT" value="Submit" />
           </div>
@@ -202,7 +234,7 @@ if(isset($_GET['delete'])){
               <tr>
                 <th scope="col">SN.</th>
                 <th scope="col">Bus No</th>
-                <th scope="col">Day of the week</th>
+                <th scope="col">Date</th>
                 <th scope="col">Time</th>
                 <th scope="col">Actions</th>
               </tr>
@@ -219,11 +251,12 @@ if(isset($_GET['delete'])){
                   echo "<tr>
                           <td>". $sn. "</td>
                           <td>". $row['busNo']. "</td>
-                          <td>". $row['weekName']. "</td>
+                          <td>". $row['date']. "</td>
                           <td>". $row['time']. "</td>
                           <td><button class='delete btn btn-sm btn-primary' id=d". $row['sn'].">Delete</button></td>
-                        </tr>";
-                }
+                          </tr>";
+                        }
+                        // <td>". $row['weekName']. "</td>
               ?>
 
             </tbody>

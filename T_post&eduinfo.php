@@ -123,8 +123,8 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="CSS/homet2.css" />
-    <link rel="stylesheet" href="CSS/MyProfileT/MyInfoT.css" />
-    <link rel="stylesheet" href="CSS/MyProfileT/BasicInfoT.css" />
+    <link rel="stylesheet" href="CSS/MyProfileNav.css" />
+    <link rel="stylesheet" href="CSS/MyProfileBody.css" />
 
     <title>My Info</title>
   </head>
@@ -135,10 +135,9 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <!-- Header -->
     <?php require 'partials/_navtop.php'?>
     
-    <nav class="Pnavbar">
+    <nav class="Pnavbar mb-3">
       <ul>
         <li><a href="myinfoBT.php">Basic Information</a></li>
-        <!-- <li><a href="T_familyinfo.php">Family Information</a></li> -->
         <li><a href="T_contactinfo.php">Contact Information</a></li>
         <li><a class="active" href="T_post&eduinfo.php">Post &amp; Educational Info</a></li>
       </ul>
@@ -159,7 +158,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
           if(mysqli_num_rows($result) > 0){
             while($row = mysqli_fetch_assoc($result)){
               ?>
-            <div class="Lcol">
+            <div class="Lcol2">
               <h5 class="h5">Picture & Post:</h5>
               <div class="form-group2">
                 <label for="photo"><span style="color: black"><b>Photo:</b></span></label><br>
@@ -203,7 +202,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
             </div>
 
             <!-- Right Side Form -->
-            <div class="Rcol">
+            <div class="Rcol2">
               <h5 class="h5">Educational Information:</h5>
               <h6 class="h6 mb-3" style="color: lightgrey;">(From top degree to lower one)</h6>
               <div class="degree-group">

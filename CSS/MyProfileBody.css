@@ -11,12 +11,24 @@ body {
   margin-right: auto;
 }
 .Lcol {
+  width: 45%;
+  margin: 2.5%;
+  float: left;
+  padding-top: 25px;
+}
+.Rcol {
+  width: 45%;
+  margin: 2.5%;
+  float: left;
+  padding-top: 25px;
+}
+.Lcol2 {
   width: 25%;
   margin: 5% 5% 5% 15%;
   float: left;
   padding-top: 25px;
 }
-.Rcol {
+.Rcol2 {
   width: 35%;
   margin: 5% 12% 5% 5%;
   float: left;

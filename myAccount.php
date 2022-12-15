@@ -1,6 +1,4 @@
 <?php
-$delete = false;
-$date = '';
 
 include 'partials/_dbconnect.php';
 session_start();
@@ -11,14 +9,8 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
 ?>
 
 <?php
-  if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $date = $_POST['date'];
-    // if(isset($_POST['submit'])){
-    //   $sql = "DELETE FROM `bookmicro` WHERE `busNo` = '{$_SESSION['busNo']}' AND `weekName` LIKE 'friday' AND `time` LIKE '{$_SESSION['shift']}' ";
-    //   $result = mysqli_query($conn, $sql);
-    //   $delete = true;
-    // }
-  }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +31,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="CSS/homet2.css" />
+    <link rel="stylesheet" href="CSS/MyProfileT/weekNav.css" />
     <link rel="stylesheet" href="CSS/passenger.css" />
     <link rel="stylesheet" href="CSS/bookmicro.css" />
 
