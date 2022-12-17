@@ -26,8 +26,15 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       $date = $_POST['date'];
     }
     if(isset($_POST['submit'])){
-      // $time = $_POST['time'];
       $subDate = $_POST['subDate'];
+      ////checking time
+      // $datetime = new DateTime( "now", new DateTimeZone( "Asia/Dhaka" ) );
+      // if(((int) $datetime->format( 'H')) >= 14){
+      //   echo 'yes';
+      // }else{
+      //   echo 'no';
+      // }
+
       $sql = "SELECT * FROM `counter` WHERE `loginIdD` = '{$_SESSION['loginID']}' AND `date` = '$subDate' ";
       $result = mysqli_query($conn, $sql);
       $num = mysqli_num_rows($result);
