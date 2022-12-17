@@ -26,7 +26,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="CSS/homet2.css" />
-    <link rel="stylesheet" href="CSS/MyProfileT/BasicInfoT.css" />
+    <link rel="stylesheet" href="CSS/MyProfileBody.css" />
 
     <title>Micro Info</title>
   </head>

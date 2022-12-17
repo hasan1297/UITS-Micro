@@ -1,6 +1,15 @@
 <?php
-$delete = false;
-$date = '';
+
+$submit = false;
+$duplicate = false;
+$date = date('Y-m-d');
+
+$datetime = new DateTime( "now", new DateTimeZone( "Asia/Dhaka" ) );
+if(((int) $datetime->format( 'H')) >= 14){
+  echo 'yes';
+}else{
+  echo 'no';
+}
 
 include 'partials/_dbconnect.php';
 session_start();
@@ -8,16 +17,32 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
   header("location: loginPage2.php");
   exit;
 }
+
 ?>
 
 <?php
   if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $date = $_POST['date'];
-    // if(isset($_POST['submit'])){
-    //   $sql = "DELETE FROM `bookmicro` WHERE `busNo` = '{$_SESSION['busNo']}' AND `weekName` LIKE 'friday' AND `time` LIKE '{$_SESSION['shift']}' ";
-    //   $result = mysqli_query($conn, $sql);
-    //   $delete = true;
-    // }
+    if(isset($_POST['select'])){
+      $date = $_POST['date'];
+    }
+    if(isset($_POST['submit'])){
+      // $time = $_POST['time'];
+      $subDate = $_POST['subDate'];
+      $sql = "SELECT * FROM `counter` WHERE `loginIdD` = '{$_SESSION['loginID']}' AND `date` = '$subDate' ";
+      $result = mysqli_query($conn, $sql);
+      $num = mysqli_num_rows($result);
+      if($num>0){
+        $duplicate = true;
+        // echo $date;
+        // echo $subDate;
+      }
+      else{
+        $sql = "INSERT INTO `counter` (`sn`, `loginIdD`, `date`, `done`) VALUES (NULL, '{$_SESSION['loginID']}', '$subDate', 'done'); ";
+        $result = mysqli_query($conn, $sql);
+        $submit = true;
+        // echo $date;
+      }
+    }
   }
 ?>
 
@@ -52,9 +77,17 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <?php require 'partials/_navtop.php'?>
 
     <?php
-    if($delete){
+    if($submit){
       echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-              <strong>Success!</strong> You have deleteded todays passenger list successfully!
+              <strong>Success!</strong> You have submitted todays passenger list successfully!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>';
+    }
+    if($duplicate){
+      echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Error!</strong> You have already submitted todays passenger list!
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
               </button>
@@ -98,27 +131,33 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                   <?php
                     $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '{$_SESSION['busNo']}' AND `date` LIKE '$date' AND `time` LIKE '{$_SESSION['shift']}' ";
                     $result = mysqli_query($conn,$sql);
-                    $num = mysqli_num_rows($result);
+                    // $num = mysqli_num_rows($result);
                     $sn = 0;
                     while($row = mysqli_fetch_assoc($result)){
+                      $date = $row['date'];
+                      // echo $subDate;
                       $sn = $sn + 1;
                       echo "<tr>
                       <th scope='row'>". $sn. "</th>
                       <td>". $row['name']. "</td>
                       <td>". $row['dept']. "</td>
                       <td>". $row['mobile']. "</td>
-                            </tr>";
-                          }
+                      </tr>";
+                    }
                   ?>
+                  
+                <!-- <input type="hidden" name="time"> -->
+                <input type="hidden" name="subDate" value="<?php echo $date;?>">
                 </tbody>
               </table>
-              <!-- <input type="submit" name="submit" class="btnS" id="submit" value="Submit" onclick="return confirm('Do you really want to submit todays passenger list?\nYou can not resubmit!');"/> -->
+              <input type="submit" name="submit" class="btnS" id="submit" value="Done"/>
+              <!-- onclick="return confirm('Do you really want to submit todays passenger list?\nYou can not resubmit!');" -->
             </div>
           </div>
         </form>
       </div>
     </div>
-    
+
     <!-- footer -->
     <?php require 'partials/_footer.php'?>
     
@@ -127,6 +166,11 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+      var now = new Date();
+      var inputElementTime = document.getElementsByName("time")[0];
+      inputElementTime.value = ("0" + now.getHours()).slice(-2) + ":" + ("0" + now.getMinutes()).slice(-2);
+    </script>
     
   </body>
   

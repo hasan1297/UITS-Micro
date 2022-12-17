@@ -1,5 +1,8 @@
 <?php
 
+$FDofTmonth = date('Y-m-01'); // hard-coded '01' for first day
+$LDofTmonth  = date('Y-m-t');
+
 include 'partials/_dbconnect.php';
 session_start();
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
@@ -9,8 +12,18 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
 ?>
 
 <?php
-
-
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if(isset($_POST['select'])){
+      $FDofTmonth = $_POST['FDofTmonth'];
+      $LDofTmonth = $_POST['LDofTmonth'];
+    }
+    // if(isset($_POST['submit'])){
+    //   $sql = "SELECT * FROM `counter` WHERE `loginIdD` = '{$_SESSION['loginID']}' AND `date` = '2022-12-17' ";
+    //   $result = mysqli_query($conn, $sql);
+    //   $sql = "INSERT INTO `counter` (`sn`, `loginIdD`, `date`, `done`) VALUES (NULL, '{$_SESSION['loginID']}', '$CounterDate', 'done'); ";
+    //   $result = mysqli_query($conn, $sql);
+    // }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -31,9 +44,9 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="CSS/homet2.css" />
-    <link rel="stylesheet" href="CSS/MyProfileT/weekNav.css" />
-    <link rel="stylesheet" href="CSS/passenger.css" />
-    <link rel="stylesheet" href="CSS/bookmicro.css" />
+    <!-- <link rel="stylesheet" href="CSS/passenger.css" /> -->
+    <link rel="stylesheet" href="CSS/myAccount.css" />
+    <!-- <link rel="stylesheet" href="CSS/bookmicro.css" /> -->
 
     <title>My passengers</title>
   </head>
@@ -44,39 +57,44 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <!-- Header -->
     <?php require 'partials/_navtop.php'?>
 
-    <?php
-    if($delete){
-      echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-              <strong>Success!</strong> You have deleteded todays passenger list successfully!
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              </button>
-            </div>';
-    }
-    ?>
     <div class="body" style="max-width: 1200px;">
       <div class="Lcol">
         <div class="container my-4">
           <form action="" method="post">
-            <label for="date" class="h5 mb-3">Select date:</label>
-            <input
-              type="date"
-              name="date"
-              class="form-control"
-              id="date"
-              value="<?php echo date('Y-m-d'); ?>"
-              >
+            <h5 class="mb-3">Specify date yourself:</h5>
+            <div class="date">
+              <div>
+                <label for="FDofTmonth" class="h6 mb-2">Starting date:</label>
+                <input
+                type="date"
+                name="FDofTmonth"
+                class="form-control"
+                id="FDofTmonth"
+                required
+                >
+              </div>
+              <div>
+                <label for="LDofTmonth" class="h6 mb-2">Ending date:</label>
+                <input
+                type="date"
+                name="LDofTmonth"
+                class="form-control"
+                id="LDofTmonth"
+                value="<?php echo date('Y-m-d'); ?>"
+                >
+              </div>
+            </div>
             <div>
-              <input type="submit" name="select" class="btnS" id="submitT" value="Select" style = "margin-top:15px; margin-right:20px;"/>
+              <input type="submit" name="select" class="btnSub" id="submitT" value="Select" style = "margin-top:15px; margin-right:20px;"/>
             </div>
           </form>
         </div>
       </div>
-      <div class="Rcol">
+      <div class="Mcol">
         <form action="" method="post">
           <div style="max-width: 900px;">
             <div class="container my-4">
-              <h5 class="h5 mb-3">Your passengers for <?php echo $date?>:</h5>
+              <h5 class="h5 mb-3">All my passengers in this month:</h5>
               <table class="table" id="myTable">
                 <thead>
                   <tr>
@@ -89,9 +107,11 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                 <tbody>
                   <!-- php MySQL query -->
                   <?php
-                    $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '{$_SESSION['busNo']}' AND `date` LIKE '$date' AND `time` LIKE '{$_SESSION['shift']}' ";
+                  // $FDofTmonth = date('Y-m-01'); // hard-coded '01' for first day
+                  // $LDofTmonth  = date('Y-m-t');
+                    $sql = "SELECT * FROM `bookmicro` WHERE `loginIdD` = '{$_SESSION['loginID']}' AND `date` BETWEEN '$FDofTmonth' AND '$LDofTmonth'";
                     $result = mysqli_query($conn,$sql);
-                    $num = mysqli_num_rows($result);
+                    // $num = mysqli_num_rows($result);
                     $sn = 0;
                     while($row = mysqli_fetch_assoc($result)){
                       $sn = $sn + 1;
@@ -100,15 +120,39 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                       <td>". $row['name']. "</td>
                       <td>". $row['dept']. "</td>
                       <td>". $row['mobile']. "</td>
-                            </tr>";
-                          }
-                  ?>
+                      </tr>";
+                    }
+                    ?>
                 </tbody>
               </table>
-              <!-- <input type="submit" name="submit" class="btnS" id="submit" value="Submit" onclick="return confirm('Do you really want to submit todays passenger list?\nYou can not resubmit!');"/> -->
             </div>
           </div>
         </form>
+      </div>
+      <div class="Rcol">
+        <div class="container my-4">
+          <!-- php MySQL query -->
+          <h5 class="h5 mb-3">Summary:</h5>
+          <?php
+          // $FDofTmonth = date('Y-m-01'); // hard-coded '01' for first day
+          // $LDofTmonth  = date('Y-m-t');
+            $sql = "SELECT * FROM `bookmicro` WHERE `loginIdD` = '{$_SESSION['loginID']}' AND `date` BETWEEN '$FDofTmonth' AND '$LDofTmonth'";
+            $result = mysqli_query($conn,$sql);
+            $num = mysqli_num_rows($result);
+            echo '<b>Total Passenger:<span style="color: red">'.$num.'</span></b><br>';
+            $sql = "SELECT * FROM `counter` WHERE `loginIdD` = {$_SESSION['loginID']} AND `date` BETWEEN '$FDofTmonth' AND '$LDofTmonth' ";
+            $result = mysqli_query($conn,$sql);
+            $num = mysqli_num_rows($result);
+            echo '<b>Total Trip:<span style="color: red">'.$num.'</span></b><br>';
+            // echo $num;
+            // while($row = mysqli_fetch_assoc($result)){
+            //   while($row['done'] == 'done' ){
+            //     $counter = $counter + 1;
+            //   }
+            // }
+            // echo $count;
+          ?>
+        </div>
       </div>
     </div>
     

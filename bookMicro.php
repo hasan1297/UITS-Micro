@@ -25,8 +25,8 @@ if(isset($_GET['delete'])){
     $name = $_POST['name'];
     $mobile = $_POST['mobile'];
     $busNo = $_POST['busNo'];
-    // $weekName = $_POST['dotw'];
     $date = $_POST['date'];
+
     // time selecting
     if($busNo%2==0){
       $time='Afternoon';
@@ -34,47 +34,29 @@ if(isset($_GET['delete'])){
     else{
       $time='Noon';
     }
+    
+    //// Finding Drivers ID with busNo
+    $sql = "SELECT * FROM `dlogin` WHERE `busNo` = '$busNo'";
+    $result = mysqli_query($conn, $sql);
+    $num = mysqli_num_rows($result);
+    while($row = mysqli_fetch_assoc($result)){
+      $DriverID = $row['loginIdD'];
+    }
 
-    // $sql = "SELECT * FROM `bookmicro` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
-    // $result = mysqli_query($conn, $sql);
-    // $num = mysqli_num_rows($result);
-    // if($num > 0){
-    //   while($row = mysqli_fetch_assoc($result)){
-    //       if ($weekName== $row['weekName']){
-    //         // $login = true;
-    //         $dublicate = true;
-    //       }
-    //   }
-    // }
-
+    ////Checking if already booked or Not
     $sql = "SELECT * FROM `bookmicro` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
     $result = mysqli_query($conn, $sql);
     $num = mysqli_num_rows($result);
     if($num > 0){
       while($row = mysqli_fetch_assoc($result)){
           if ($date== $row['date']){
-            // $login = true;
+            //// Already Booked
             $dublicate = true;
           }
       }
     }
 
-    // if(!$dublicate){
-    //   ////  checking if seat is available  ////
-    //   $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '$busNo' AND `weekName` LIKE '$weekName' AND `time` LIKE '$time' ";
-    //   $result = mysqli_query($conn, $sql);
-    //   $num = mysqli_num_rows($result);
-
-    //   if($num < 10){
-    //     ////  book seat  ////
-    //     $sql ="INSERT INTO `bookmicro` (`loginIdT`, `name`, `mobile`, `busNo`, `weekName`, `time`) VALUES ('{$_SESSION['loginID']}', '$name', '$mobile', '$busNo', '$weekName', '$time')";
-    //     $result = mysqli_query($conn, $sql);
-    //     $booked = true;
-    //   }
-    //   else{
-    //     $noseat = true;  // No seat
-    //   }   
-    // }
+    //// If Already Not Booked 
     if(!$dublicate){
       ////  checking if seat is available  ////
       $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '$busNo' AND `date` LIKE '$date' AND `time` LIKE '$time' ";
@@ -83,12 +65,13 @@ if(isset($_GET['delete'])){
 
       if($num < 10){
         ////  book seat  ////
-        $sql ="INSERT INTO `bookmicro` (`loginIdT`, `name`, `mobile`, `busNo`, `date`, `time`) VALUES ('{$_SESSION['loginID']}', '$name', '$mobile', '$busNo', '$date', '$time')";
+        $sql ="INSERT INTO `bookmicro` (`loginIdT`, `loginIdD`, `name`, `mobile`, `busNo`, `date`, `time`) VALUES ('{$_SESSION['loginID']}', '$DriverID', '$name', '$mobile', '$busNo', '$date', '$time')";
         $result = mysqli_query($conn, $sql);
         $booked = true;
       }
       else{
-        $noseat = true;  // No seat
+        //// No  seat
+        $noseat = true;  
       }   
     }
   }
@@ -256,9 +239,7 @@ if(isset($_GET['delete'])){
                           <td><button class='delete btn btn-sm btn-primary' id=d". $row['sn'].">Delete</button></td>
                           </tr>";
                         }
-                        // <td>". $row['weekName']. "</td>
               ?>
-
             </tbody>
           </table>
         </div>

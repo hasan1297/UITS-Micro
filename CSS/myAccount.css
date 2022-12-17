@@ -6,27 +6,36 @@ body {
   margin-right: auto;
 }
 .body {
-  margin-top: -50px;
+  margin-top: -25px;
   margin-left: auto;
   margin-right: auto;
 }
 .Lcol {
   margin-top: 15px;
-  width: 25%;
-  margin: 5%;
+  width: 28%;
+  margin: 3.33%;
   float: left;
 }
-
+.Mcol {
+  width: 37%;
+  margin: 3.34%;
+  float: left;
+}
 .Rcol {
-  width: 55%;
-  margin: 5%;
+  width: 15%;
+  margin: 3.33%;
   float: left;
 }
-.btnS {
+.date {
+  display: flex;
+  column-gap: 15px;
+}
+.btnSub {
   padding: 0.25rem 0.5rem;
   font-size: 14px;
   line-height: 1.7;
-  margin-top: 12px;
+  margin-top: 7px !important;
+  margin-left: 7px !important;
   border-radius: 0.2rem;
   background-color: #007bff;
   border: 0;
