@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           $_SESSION['loggedin'] = true;
           $_SESSION['loginID'] = $LoginId;
           $_SESSION['name'] = $name;
-          header("location: myInfoBT.php");
+          header("location: myInfo.php");
         }
         else{
           $showError = "Invalid credentials."; 
@@ -59,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION['loginID'] = $LoginId;
             $_SESSION['busNo'] = $row['busNo'];
             $_SESSION['shift'] = $row['shift'];
-            header("location: myInfoBT.php");
+            header("location: myInfo.php");
           }
           else{
           $showError = "Invalid credentials."; 
@@ -106,7 +106,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       }
     ?>
   <div class="container">
-    <form action="/ISP/loginPage2.php" method="post" style="width:100%;">
+    <form action="/ISP/loginPage.php" method="post" style="width:100%;">
       <div class="form-group img">
         <img src="pic/uitsLogoT.png" alt="" width="140" height="165" />
       </div>

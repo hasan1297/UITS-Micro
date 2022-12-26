@@ -3,7 +3,7 @@
 include 'partials/_dbconnect.php';
 session_start();
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
-  header("location: loginPage2.php");
+  header("location: loginPage.php");
   exit;
 }
 ?>
@@ -90,9 +90,10 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
 
     <nav class="Pnavbar mb-5">
       <ul>
-        <li><a href="myinfoBT.php">Basic Information</a></li>
-        <li><a class="active" href="T_contactinfo.php">Contact Information</a></li>
-        <li><a href="T_post&eduinfo.php">Post &amp; Educational Info</a></li>
+        <li><a href="myinfo.php">Basic Information</a></li>
+        <li><a class="active" href="contactinfo.php">Contact Information</a></li>
+        <li><a href="post&eduinfo.php">Post &amp; Educational Info</a></li>
+        <li><a href="passwordChangeByUser.php">Password Change (self)</a></li>
       </ul>
     </nav>
 

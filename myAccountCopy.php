@@ -1,8 +1,7 @@
 <?php
 
 $FDofTmonth = date('Y-m-01'); // hard-coded '01' for first day
-// $LDofTmonth  = date('Y-m-t'); // for last day of the month
-$LDofTmonth  = date('Y-m-d');
+$LDofTmonth  = date('Y-m-t');
 
 include 'partials/_dbconnect.php';
 session_start();
@@ -51,7 +50,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     
     
-    <title>My Account</title>
+    <title>My passengers</title>
   </head>
   <body>
     <!-- css first -->
@@ -136,28 +135,23 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
           <!-- php MySQL query -->
           <h5 class="h5 mb-3">Summary:</h5>
           <?php
-            //// Summary
-            // Total passenger
+          // $FDofTmonth = date('Y-m-01'); // hard-coded '01' for first day
+          // $LDofTmonth  = date('Y-m-t');
             $sql = "SELECT * FROM `bookmicro` WHERE `loginIdD` = '{$_SESSION['loginID']}' AND `date` BETWEEN '$FDofTmonth' AND '$LDofTmonth'";
             $result = mysqli_query($conn,$sql);
             $num = mysqli_num_rows($result);
             echo '<b>Total Passenger:<span style="color: red">'.$num.'</span></b><br>';
-            // Total Trip
-            $sql = "SELECT * FROM `counter` WHERE `loginIdD` = {$_SESSION['loginID']} AND `date` BETWEEN '$FDofTmonth' AND '$LDofTmonth' ";
-            $result = mysqli_query($conn,$sql);
-            $num = mysqli_num_rows($result);
-            echo '<b>Total Trip:<span style="color: red">'.$num.'</span></b><br>';
-            // Total Trip at Noon
-            $sql = "SELECT * FROM `counter` WHERE `loginIdD` = {$_SESSION['loginID']} AND `date` BETWEEN '$FDofTmonth' AND '$LDofTmonth' AND `time` = 'Noon' ";
-            $result = mysqli_query($conn,$sql);
-            $num = mysqli_num_rows($result);
-            echo '<b>Total Trip at Noon:<span style="color: red">'.$num.'</span></b><br>';
-            // Total Trip at Evening
-            $sql = "SELECT * FROM `counter` WHERE `loginIdD` = {$_SESSION['loginID']} AND `date` BETWEEN '$FDofTmonth' AND '$LDofTmonth' AND `time` = 'Evening' ";
-            $result = mysqli_query($conn,$sql);
-            $num = mysqli_num_rows($result);
-            echo '<b>Total Trip at Evening:<span style="color: red">'.$num.'</span></b><br>';
-
+            // $sql = "SELECT * FROM `counter` WHERE `loginIdD` = {$_SESSION['loginID']} AND `date` BETWEEN '$FDofTmonth' AND '$LDofTmonth' ";
+            // $result = mysqli_query($conn,$sql);
+            // $num = mysqli_num_rows($result);
+            // echo '<b>Total Trip:<span style="color: red">'.$num.'</span></b><br>';
+            // echo $num;
+            // while($row = mysqli_fetch_assoc($result)){
+            //   while($row['done'] == 'done' ){
+            //     $counter = $counter + 1;
+            //   }
+            // }
+            // echo $count;
           ?>
         </div>
       </div>

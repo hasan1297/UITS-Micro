@@ -48,7 +48,14 @@ body {
   background-color: rgb(150, 144, 144);
   color: rgb(233, 233, 233);
 }
-
+/* .navbar li a:active {
+  background-color: rgb(150, 144, 144);
+  color: rgb(233, 233, 233);
+} */
+/* .navbar > .active > a {
+  background-color: rgb(150, 144, 144);
+  color: rgb(233, 233, 233);
+} */
 .bottom {
   width: 80%;
   text-align: center;

@@ -3,7 +3,7 @@
 include 'partials/_dbconnect.php';
 session_start();
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
-  header("location: loginPage2.php");
+  header("location: loginPage.php");
   exit;
 }
 ?>
@@ -27,6 +27,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     />
     <link rel="stylesheet" href="CSS/homet2.css" />
     <link rel="stylesheet" href="CSS/MyProfileBody.css" />
+    <link rel="stylesheet" href="CSS/table.css" />
 
     <title>Micro Info</title>
   </head>
@@ -38,105 +39,62 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <?php require 'partials/_navtop.php'?>
 
     <!-- body -->
-    <div class="body" style="max-width: 900px; margin-top: 0px;">
+    <div class="body" style="max-width: 600px; margin-top: 0px;">
 
-      <!-- Left Side Form -->
-      <div class="Lcol">
-        <div class="container my-4">
-          <table class="table" id="myTable">
-            <thead>
-              <tr>
-                <th>
-                  <h5 class="h5" style = "text-align: center;">At Noon:</h5>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              
-              <?php
-              $sql = "SELECT * FROM `microinfo` WHERE `shift` LIKE 'Noon'";
-              $result = mysqli_query($conn,$sql);
-              $sn = 1;
-              while($row = mysqli_fetch_assoc($result)){
-                if($row['busNo'] == $sn){
-                  $sn = $sn + 2;
-                  echo '<tr>
-                          <td align = "center" >
-                            <div>
-                            <label for="microNo"><span style="color: green"> Micro No:</span> </label><span style="color: red"><b>';?>
-                              <?php echo $row['busNo']. "<br>"; ?><?php echo '</b></span>
-                            </div>
-                            <div>
-                            <label for="root"><span style="color: green"> Root:</span> </label>';?>
-                              <?php echo $row['root']. "<br>"; ?><?php echo '
-                            </div>
-                            <div>
-                            <label for="driverName"><span style="color: green"> Drivers Name:</span> </label><b>';?>
-                              <?php echo $row['name']. "<br>"; ?><?php echo '</b>
-                            </div>
-                            <div>
-                            <label for="driverMobile"><span style="color: green"> Mobile:</span> </label><b>';?>
-                              <?php echo $row['mobile']. "<br>"; ?><?php echo '</b>
-                            </div>
-                          </td>
-                        </tr>';
-                  }
-                }
-              ?>
+    <!-- Left Side Form -->
+    <!-- <div class="Lcol"> -->
+      <div class="container my-4">
+        <table class="table" id="myTable">
+          <thead>
+            <tr>
+              <th>
+                <h5 class="h5" style = "text-align: center;">Micro info:</h5>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
 
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Right Side Form -->
-      <div class="Rcol">
-        <div class="container my-4">
-          <table class="table" id="myTable">
-            <thead>
-              <tr>
-                <th scope="col">
-                  <h5 class="h5" style = "text-align: center;">At Afteroon:</h5>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-
-              <?php
-              $sql = "SELECT * FROM `microinfo` WHERE `shift` LIKE 'Afternoon'";
-              $result = mysqli_query($conn,$sql);
-              $sn = 2;
-              while($row = mysqli_fetch_assoc($result)){
-                if($row['busNo'] == $sn){
-                  $sn = $sn + 2;
-                  echo '<tr>
-                          <td align = "center" >
-                            <div>
-                            <label for="microNo"><span style="color: green"> Micro No:</span> </label><span style="color: red"><b>';?>
-                              <?php echo $row['busNo']. "<br>"; ?><?php echo '</b></span>
-                            </div>
-                            <div>
-                            <label for="root"><span style="color: green"> Root:</span> </label>';?>
-                              <?php echo $row['root']. "<br>"; ?><?php echo '
-                            </div>
-                            <div>
-                            <label for="driverName"><span style="color: green"> Drivers Name:</span> </label><b>';?>
-                              <?php echo $row['name']. "<br>"; ?><?php echo '</b>
-                            </div>
-                            <div>
-                            <label for="driverMobile"><span style="color: green"> Mobile:</span> </label><b>';?>
-                              <?php echo $row['mobile']. "<br>"; ?><?php echo '</b>
-                            </div>
-                          </td>
-                        </tr>';
+            <?php
+            $sql = "SELECT * FROM `microinfo`";
+            $result = mysqli_query($conn,$sql);
+            $sn = 1;
+            while($row = mysqli_fetch_assoc($result)){
+              if($row['busNo'] == $sn){
+                $sn = $sn + 1;
+                echo '<tr>
+                        <td>
+                          <div>
+                          <label for="microNo"><span style="color: green"> Micro No:</span> </label><span style="color: red"><b>';?>
+                            <?php echo $row['busNo']. "<br>"; ?><?php echo '</b></span>
+                          </div>
+                          <div>
+                          <label for="root"><span style="color: green"> Root:</span> </label>';?>
+                            <?php echo $row['root']. "<br>"; ?><?php echo '
+                          </div>
+                          <div>
+                          <label for="driverName"><span style="color: green"> 1st return trip :</span> </label><b>Noon</b>
+                          </div>
+                          <div>
+                          <label for="driverName"><span style="color: green"> 2nd return trip :</span> </label><b>Evening</b>
+                          </div>
+                          <div>
+                          <label for="driverName"><span style="color: green"> Drivers Name:</span> </label><b>';?>
+                            <?php echo $row['name']. "<br>"; ?><?php echo '</b>
+                          </div>
+                          <div>
+                          <label for="driverMobile"><span style="color: green"> Mobile:</span> </label><b>';?>
+                            <?php echo $row['mobile']. "<br>"; ?><?php echo '</b>
+                          </div>
+                        </td>
+                      </tr>';
                 }
               }
-              ?>
+            ?>
 
-            </tbody>
-          </table>
-        </div>
+          </tbody>
+        </table>
       </div>
+    <!-- </div> -->
 
     </div>
 

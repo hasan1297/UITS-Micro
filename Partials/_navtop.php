@@ -49,15 +49,14 @@ echo '<script>0</script>
           <ul>
             <li><a href="/isp/Home.php">Home</a></li>';
     if($driver){
-      echo '<li><a href="/isp/passenger.php">Passenger</a></li>';
+      echo '<li><a href="/isp/passengerNoon.php">Passenger</a></li>';
       echo '<li><a href="/isp/myAccount.php">My Account</a></li>';
     }
     if($teacher){
       echo '<li><a href="/isp/MicroInfo.php">Micro Info</a></li>
             <li><a href="/isp/BookMicro.php">Book Micro</a></li>';
     }
-      echo '<li><a href="/isp/myinfoBT.php">My Profile</a></li>
-            <!-- <li><a href="/Isp/logout.php">Log out</a></li> -->
+      echo '<li><a href="/isp/myinfo.php">My Profile</a></li>
           </ul>
         </nav>
       </header>';

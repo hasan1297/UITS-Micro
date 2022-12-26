@@ -49,3 +49,52 @@ CASCADE;
 </div>
 
 pic/avaterT.png
+
+      <!-- Right Side Form -->
+      <!-- <div class="Rcol">
+        <div class="container my-4">
+          <table class="table" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <h5 class="h5" style = "text-align: center;">At Afteroon:</h5>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <?php
+              // $sql = "SELECT * FROM `microinfo` WHERE `shift` LIKE 'Afternoon'";
+              // $result = mysqli_query($conn,$sql);
+              // $sn = 2;
+              // while($row = mysqli_fetch_assoc($result)){
+              //   if($row['busNo'] == $sn){
+              //     $sn = $sn + 2;
+              //     echo '<tr>
+              //             <td align = "center" >
+              //               <div>
+              //               <label for="microNo"><span style="color: green"> Micro No:</span> </label><span style="color: red"><b>';?>
+              //                 <?php //echo $row['busNo']. "<br>"; ?><?php echo //'</b></span>
+              //               </div>
+              //               <div>
+              //               <label for="root"><span style="color: green"> Root:</span> </label>';?>
+              //                 <?php echo //$row['root']. "<br>"; ?><?php echo //'
+              //               </div>
+              //               <div>
+              //               <label for="driverName"><span style="color: green"> Drivers Name:</span> </label><b>';?>
+              //                 <?php echo //$row['name']. "<br>"; ?><?php echo //'</b>
+              //               </div>
+              //               <div>
+              //               <label for="driverMobile"><span style="color: green"> Mobile:</span> </label><b>';?>
+              //                 <?php echo //$row['mobile']. "<br>"; ?><?php echo //'</b>
+              //               </div>
+              //             </td>
+              //           </tr>';
+              //   }
+              // }
+              ?>
+
+            </tbody>
+          </table>
+        </div>
+      </div> -->

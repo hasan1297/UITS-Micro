@@ -10,27 +10,27 @@ if ($conn){
 }
 
 //delete database if exist
-$sql = 'DROP DATABASE isp';
+$sql = 'DROP DATABASE demo';
 $retval = mysqli_query($conn,$sql);
 if ($retval){
-  echo "yes droped DB ISP (Imtiaz Sir Project) if existed<br>";
+  echo "yes droped DB demo if existed<br>";
 }
 
 //creating database
-$sql = "CREATE DATABASE isp; ";
+$sql = "CREATE DATABASE demo; ";
 $result = mysqli_query($conn,$sql);
 if ($result){
-  echo "yes creating database ISP (Imtiaz Sir Project)<br>";
+  echo "yes creating database demo<br>";
 }
 
 //connecting to the database
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "isp";
+$database = "demo";
 $conn = mysqli_connect($servername, $username, $password, $database);
 if ($conn){
-  echo "yes database ISP (Imtiaz Sir Project) connect<br><br><br>Creating tables--><br><br>";
+  echo "yes database demo connect<br><br><br>Creating tables--><br><br>";
 }
 
 
@@ -61,6 +61,7 @@ if ($result){
 $sql = "CREATE TABLE dlogin(
 loginIdD INT(10) AUTO_INCREMENT PRIMARY KEY,
 busNo  VARCHAR(11) NOT NULL,
+shift  VARCHAR(20) NOT NULL,
 password  VARCHAR(255) NOT NULL,
 dt  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )";
@@ -126,6 +127,7 @@ name   VARCHAR(50) NOT NULL,
 DoB   DATETIME NULL DEFAULT NULL,
 BG   VARCHAR(10) NOT NULL DEFAULT '-Select-',
 gender   VARCHAR(10) NOT NULL DEFAULT 'Male',
+shift   VARCHAR(10) NOT NULL DEFAULT 'Day',
 MS   VARCHAR(10) NOT NULL DEFAULT '-Select-',
 religion   VARCHAR(15) NOT NULL DEFAULT 'Islam',
 nationality   VARCHAR(50) NOT NULL DEFAULT 'Bangladesh',
@@ -141,12 +143,12 @@ $sql = "CREATE TABLE bookmicro
 (
 sn INT(11) AUTO_INCREMENT PRIMARY KEY,
 loginIdT INT(10) NOT NULL,
-loginIdD INT(10) NOT NULL,
 name   VARCHAR(50) NOT NULL,
 dept   VARCHAR(20) NOT NULL,
 mobile  VARCHAR(20) NOT NULL,
 busNo   INT(2) NOT NULL,
 date   DATE NULL,
+weekName   VARCHAR(15) NOT NULL,
 time   VARCHAR(15) NOT NULL
 )";
 $result = mysqli_query($conn,$sql);
@@ -210,21 +212,7 @@ degree5  VARCHAR(255) NOT NULL
 )";
 $result = mysqli_query($conn,$sql);
 if ($result){
-  echo "yes picpostd<br>";
-}
-
-//  counter
-$sql = "CREATE TABLE counter
-(
-sn INT(255) AUTO_INCREMENT PRIMARY KEY,
-loginIdD INT(10) NOT NULL,
-date   DATE NOT NULL,
-time   VARCHAR(15) NOT NULL,
-done   VARCHAR(7) NOT NULL
-)";
-$result = mysqli_query($conn,$sql);
-if ($result){
-  echo "yes counter<br><br><br>connecting foreign keys--><br><br>";
+  echo "yes picpostd<br><br><br>connecting foreign keys--><br><br>";
 }
 
 
@@ -275,25 +263,7 @@ if ($result){
 $sql = "ALTER TABLE `microinfo` ADD FOREIGN KEY (`loginIdD`) REFERENCES `dlogin`(`loginIdD`) ON DELETE CASCADE ON UPDATE CASCADE";
 $result = mysqli_query($conn,$sql);
 if ($result){
-  echo "yes  microinfo and dlogin <br>";
-}
-////  bookmicro and tlogin
-$sql = "ALTER TABLE `bookmicro` ADD FOREIGN KEY (`loginIdT`) REFERENCES `tlogin`(`loginIdT`) ON DELETE CASCADE ON UPDATE CASCADE";
-$result = mysqli_query($conn,$sql);
-if ($result){
-  echo "yes  bookmicro and tlogin <br>";
-}
-////  bookmicro and dlogin
-$sql = "ALTER TABLE `bookmicro` ADD FOREIGN KEY (`loginIdD`) REFERENCES `dlogin`(`loginIdD`) ON DELETE CASCADE ON UPDATE CASCADE";
-$result = mysqli_query($conn,$sql);
-if ($result){
-  echo "yes  bookmicro and dlogin <br>";
-}
-////  counter and dlogin
-$sql = "ALTER TABLE `counter` ADD FOREIGN KEY (`loginIdD`) REFERENCES `dlogin`(`loginIdD`) ON DELETE CASCADE ON UPDATE CASCADE";
-$result = mysqli_query($conn,$sql);
-if ($result){
-  echo "yes  counter and dlogin <br><br><br>changing the starting point of auto increment--><br><br>";
+  echo "yes  microinfo and dlogin <br><br><br>changing the starting point of auto increment--><br><br>";
 }
 
 
@@ -323,7 +293,7 @@ if ($result){
 }
 
 //  dlogin
-$sql = "INSERT INTO `dlogin` (`loginIdD`, `busNo`, `password`, `dt`) VALUES (NULL, '1', '1234', current_timestamp()), (NULL, '2', '1234', current_timestamp()), (NULL, '3', '1234', current_timestamp()), (NULL, '4', '1234', current_timestamp())";
+$sql = "INSERT INTO `dlogin` (`loginIdD`, `busNo`, `shift`, `password`, `dt`) VALUES (NULL, '1', 'Noon', '1234', current_timestamp()), (NULL, '2', 'Afternoon', '1234', current_timestamp()), (NULL, '3', 'Noon', '1234', current_timestamp()), (NULL, '4', 'Afternoon', '1234', current_timestamp())";
 $result = mysqli_query($conn,$sql);
 if ($result){
   echo "yes  dlogin 4 ids<br><br>";
@@ -344,7 +314,7 @@ if ($result){
 }
 
 //  basicinfod
-$sql = "INSERT INTO `basicinfod` (`sn`, `loginIdD`, `name`, `DoB`, `BG`, `gender`, `MS`, `religion`, `nationality`, `nid`) VALUES (NULL, '14551001', 'Kala Mia', NULL, '-Select-', 'Male', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551002', 'Dhola Mia', NULL, '-Select-', 'Male', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551003', 'Chan Mia', NULL, '-Select-', 'Male', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551004', 'Shona Mia', NULL, '-Select-', 'Male', '-Select-', 'Islam', 'Bangladesh', '')";
+$sql = "INSERT INTO `basicinfod` (`sn`, `loginIdD`, `name`, `DoB`, `BG`, `gender`, `shift`, `MS`, `religion`, `nationality`, `nid`) VALUES (NULL, '14551001', 'Kala Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551002', 'Dhola Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551003', 'Chan Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', ''), (NULL, '14551004', 'Shona Mia', NULL, '-Select-', 'Male', 'Day', '-Select-', 'Islam', 'Bangladesh', '')";
 $result = mysqli_query($conn,$sql);
 if ($result){
   echo "yes  basicinfod data<br>";
@@ -367,17 +337,12 @@ if ($result){
 
 
 ////  Book Micro data entry
-$sql = "INSERT INTO `bookmicro` (`sn`, `loginIdT`, `loginIdD`, `name`, `dept`, `mobile`, `busNo`, `date`, `time`) VALUES (NULL, '1914551001', '14551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', CURDATE(), 'Evening'), (NULL, '1914551002', '14551001', 'Fahim Kamal', '', '01853152421', '1', CURDATE(), 'Noon'), (NULL, '1914551003', '14551001', 'Fahad Mia', '', '01823546855', '1', CURDATE(), 'Noon'), (NULL, '1914551004', '14551001', 'Shayan Tushar', '', '01753124586', '1', CURDATE(), 'Noon'), (NULL, '1914551005', '14551001', 'Firoz Molla', '', '01645865215', '1', CURDATE(), 'Noon'), (NULL, '1914551006', '14551001', 'Adnan Shuvo', '', '01953124444', '1', CURDATE(), 'Noon'), (NULL, '1914551007', '14551001', 'Shahru Islam', '', '01756864455', '1', CURDATE(), 'Noon'), (NULL, '1914551008', '14551001', 'Ebrahim khan', '', '01325232456', '1', CURDATE(), 'Noon'), (NULL, '1914551009', '14551001', 'Jamil Coudhury', '', '01844445577', '1', CURDATE(), 'Noon'), (NULL, '1914551010', '14551001', 'Jobair Ahmed', '', '01866554499', '1', CURDATE(), 'Noon'), (NULL, '1914551011', '14551001', 'Sadman Khan', '', '01844444444', '1', CURDATE(), 'Noon'), (NULL, '1914551012', '14551001', 'Mithu Hossain', '', '01823325225', '1', CURDATE(), 'Evening'), (NULL, '1914551001', '14551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', CURDATE()+1, 'Noon'), (NULL, '1914551002', '14551001', 'Fahim Kamal', '', '01853152421', '1', CURDATE()+1, 'Noon'), (NULL, '1914551003', '14551001', 'Fahad Mia', '', '01823546855', '1', CURDATE()+1, 'Noon'), (NULL, '1914551004', '14551001', 'Shayan Tushar', '', '01753124586', '1', CURDATE()+1, 'Noon'), (NULL, '1914551005', '14551001', 'Firoz Molla', '', '01645865215', '1', CURDATE()+1, 'Noon'), (NULL, '1914551006', '14551001', 'Adnan Shuvo', '', '01953124444', '1', CURDATE()+1, 'Noon'), (NULL, '1914551007', '14551001', 'Shahru Islam', '', '01756864455', '1', CURDATE()+1, 'Evening'), (NULL, '1914551008', '14551001', 'Ebrahim khan', '', '01325232456', '1', CURDATE()+1, 'Evening'), (NULL, '1914551009', '14551001', 'Jamil Coudhury', '', '01844445577', '1', CURDATE()+1, 'Evening'), (NULL, '1914551010', '14551001', 'Jobair Ahmed', '', '01866554499', '1', CURDATE()+1, 'Evening'), (NULL, '1914551011', '14551001', 'Sadman Khan', '', '01844444444', '1', CURDATE()+1, 'Evening'), (NULL, '1914551012', '14551001', 'Mithu Hossain', '', '01823325225', '1', CURDATE()+1, 'Evening'),(NULL, '1914551001', '14551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', CURDATE()+2, 'Noon'), (NULL, '1914551002', '14551001', 'Fahim Kamal', '', '01853152421', '1', CURDATE()+2, 'Noon'),  (NULL, '1914551003', '14551001', 'Fahad Mia', '', '01823546855', '1', CURDATE()+2, 'Noon'), (NULL, '1914551004', '14551001', 'Shayan Tushar', '', '01753124586', '1', CURDATE()+2, 'Noon'), (NULL, '1914551005', '14551001', 'Firoz Molla', '', '01645865215', '1', CURDATE()+2, 'Noon'), (NULL, '1914551006', '14551001', 'Adnan Shuvo', '', '01953124444', '1', CURDATE()+2, 'Noon'),  (NULL, '1914551007', '14551001', 'Shahru Islam', '', '01756864455', '1', CURDATE()+2, 'Evening'), (NULL, '1914551008', '14551001', 'Ebrahim khan', '', '01325232456', '1', CURDATE()+2, 'Evening'), (NULL, '1914551009', '14551001', 'Jamil Coudhury', '', '01844445577', '1', CURDATE()+2, 'Evening'), (NULL, '1914551010', '14551001', 'Jobair Ahmed', '', '01866554499', '1', CURDATE()+2, 'Evening'), (NULL, '1914551011', '14551001', 'Sadman Khan', '', '01844444444', '1', CURDATE()+2, 'Evening'), (NULL, '1914551012', '14551001', 'Mithu Hossain', '', '01823325225', '1', CURDATE()+2, 'Evening'),(NULL, '1914551001', '14551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', CURDATE()+3, 'Noon'), (NULL, '1914551002', '14551001', 'Fahim Kamal', '', '01853152421', '1', CURDATE()+3, 'Noon'), (NULL, '1914551003', '14551001', 'Fahad Mia', '', '01823546855', '1', CURDATE()+3, 'Noon'), (NULL, '1914551004', '14551001', 'Shayan Tushar', '', '01753124586', '1', CURDATE()+3, 'Noon'), (NULL, '1914551005', '14551001', 'Firoz Molla', '', '01645865215', '1', CURDATE()+3, 'Noon'), (NULL, '1914551006', '14551001', 'Adnan Shuvo', '', '01953124444', '1', CURDATE()+3, 'Noon'), (NULL, '1914551007', '14551001', 'Shahru Islam', '', '01756864455', '1', CURDATE()+3, 'Evening'), (NULL, '1914551008', '14551001', 'Ebrahim khan', '', '01325232456', '1', CURDATE()+3, 'Evening'), (NULL, '1914551009', '14551001', 'Jamil Coudhury', '', '01844445577', '1', CURDATE()+3, 'Evening'), (NULL, '1914551010', '14551001', 'Jobair Ahmed', '', '01866554499', '1', CURDATE()+3, 'Evening'), (NULL, '1914551011', '14551001', 'Sadman Khan', '', '01844444444', '1', CURDATE()+3, 'Evening'), (NULL, '1914551012', '14551001', 'Mithu Hossain', '', '01823325225', '1', CURDATE()+3, 'Evening')";
+$sql = "INSERT INTO `bookmicro` (`sn`, `loginIdT`, `name`, `dept`, `mobile`, `busNo`, `date`, `weekName`, `time`) VALUES (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551002', 'Fahim Kamal', '', '01853152421', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551003', 'Fahad Mia', '', '01823546855', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551004', 'Shayan Tushar', '', '01753124586', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551005', 'Firoz Molla', '', '01645865215', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551006', 'Adnan Shuvo', '', '01953124444', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551007', 'Shahru Islam', '', '01756864455', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551008', 'Ebrahim khan', '', '01325232456', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551009', 'Jamil Coudhury', '', '01844445577', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551010', 'Jobair Ahmed', '', '01866554499', '1', CURDATE(), 'Monday', 'Noon'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '2', CURDATE()+1, 'Wednesday', 'Noon'), (NULL, '1914551002', 'Fahim Kamal', '', '01853152421', '2', CURDATE()+1, 'Wednesday', 'Noon'), (NULL, '1914551003', 'Fahad Mia', '', '01823546855', '2', CURDATE()+1, 'Wednesday', 'Noon'), (NULL, '1914551004', 'Shayan Tushar', '', '01753124586', '2', CURDATE()+1, 'Wednesday', 'Noon'), (NULL, '1914551005', 'Firoz Molla', '', '01645865215', '2', CURDATE()+1, 'Monday', 'Noon'), (NULL, '1914551006', 'Adnan Shuvo', '', '01953124444', '2', CURDATE()+1, 'Monday', 'Noon'), (NULL, '1914551007', 'Shahru Islam', '', '01756864455', '2', CURDATE()+1, 'Monday', 'Evening'), (NULL, '1914551008', 'Ebrahim khan', '', '01325232456', '2', CURDATE()+1, 'Monday', 'Evening'), (NULL, '1914551009', 'Jamil Coudhury', '', '01844445577', '2', CURDATE()+1, 'Monday', 'Evening'), (NULL, '1914551010', 'Jobair Ahmed', '', '01866554499', '2', CURDATE()+1, 'Monday', 'Evening'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '3', CURDATE()+2, 'Tuesday', 'Noon'), (NULL, '1914551002', 'Fahim Kamal', '', '01853152421', '3', CURDATE()+2, 'Tuesday', 'Noon'),  (NULL, '1914551003', 'Fahad Mia', '', '01823546855', '3', CURDATE()+2, 'Tuesday', 'Noon'), (NULL, '1914551004', 'Shayan Tushar', '', '01753124586', '3', CURDATE()+2, 'Tuesday', 'Noon'), (NULL, '1914551005', 'Firoz Molla', '', '01645865215', '3', CURDATE()+2, 'Monday', 'Noon'), (NULL, '1914551006', 'Adnan Shuvo', '', '01953124444', '3', CURDATE()+2, 'Monday', 'Noon'),  (NULL, '1914551007', 'Shahru Islam', '', '01756864455', '3', CURDATE()+2, 'Monday', 'Evening'), (NULL, '1914551008', 'Ebrahim khan', '', '01325232456', '3', CURDATE()+2, 'Monday', 'Evening'), (NULL, '1914551009', 'Jamil Coudhury', '', '01844445577', '3', CURDATE()+2, 'Monday', 'Evening'), (NULL, '1914551010', 'Jobair Ahmed', '', '01866554499', '3', CURDATE()+2, 'Monday', 'Evening'), (NULL, '1914551001', 'Mahamudul Hasan Badhan', '', '01853438156', '4', CURDATE()+3, 'Thursday', 'Noon'), (NULL, '1914551002', 'Fahim Kamal', '', '01853152421', '4', CURDATE()+3, 'Thursday', 'Noon'), (NULL, '1914551003', 'Fahad Mia', '', '01823546855', '4', CURDATE()+3, 'Thursday', 'Noon'), (NULL, '1914551004', 'Shayan Tushar', '', '01753124586', '4', CURDATE()+3, 'Tuesday', 'Noon'), (NULL, '1914551005', 'Firoz Molla', '', '01645865215', '4', CURDATE()+3, 'Monday', 'Noon'), (NULL, '1914551006', 'Adnan Shuvo', '', '01953124444', '4', CURDATE()+3, 'Monday', 'Noon'), (NULL, '1914551007', 'Shahru Islam', '', '01756864455', '4', CURDATE()+3, 'Monday', 'Evening'), (NULL, '1914551008', 'Ebrahim khan', '', '01325232456', '4', CURDATE()+3, 'Monday', 'Evening'), (NULL, '1914551009', 'Jamil Coudhury', '', '01844445577', '4', CURDATE()+3, 'Monday', 'Evening'), (NULL, '1914551010', 'Jobair Ahmed', '', '01866554499', '4', CURDATE()+3, 'Monday', 'Evening')";
 $result = mysqli_query($conn,$sql);
 
 if ($result){
   echo "yes  Book Micro data<br><br><br>picpost data entry--><br>";
 }
-// $num = mysqli_num_rows($result);
-// echo $num."<br>";
-// while($row = mysqli_fetch_assoc($result)){
-  
-// }
 
 
 ////  picpost data entry

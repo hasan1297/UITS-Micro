@@ -16,11 +16,27 @@ body {
   margin: 5%;
   float: left;
 }
-
 .Rcol {
   width: 55%;
   margin: 5%;
   float: left;
+}
+.form-group {
+  margin-bottom: 10px;
+  max-width: 250px;
+  display: flex;
+}
+.form-group label {
+  margin-bottom: 0;
+  max-height: 28px;
+  min-width: fit-content;
+  padding: 2px 6px 0px 0px;
+}
+.form-group input,
+select {
+  font-size: 14px !important;
+  max-height: 28px;
+  padding: 0 0 0 19px !important;
 }
 .btnS {
   padding: 0.25rem 0.5rem;

@@ -7,7 +7,7 @@ $delete = false;
 include 'partials/_dbconnect.php';
 session_start();
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
-  header("location: loginPage2.php");
+  header("location: loginPage.php");
   exit;
 }
 ?>
@@ -25,16 +25,9 @@ if(isset($_GET['delete'])){
     $name = $_POST['name'];
     $mobile = $_POST['mobile'];
     $busNo = $_POST['busNo'];
+    $time = $_POST['time'];
     $date = $_POST['date'];
 
-    // time selecting
-    if($busNo%2==0){
-      $time='Afternoon';
-    }
-    else{
-      $time='Noon';
-    }
-    
     //// Finding Drivers ID with busNo
     $sql = "SELECT * FROM `dlogin` WHERE `busNo` = '$busNo'";
     $result = mysqli_query($conn, $sql);
@@ -49,7 +42,7 @@ if(isset($_GET['delete'])){
     $num = mysqli_num_rows($result);
     if($num > 0){
       while($row = mysqli_fetch_assoc($result)){
-          if ($date== $row['date']){
+          if(($date == $row['date']) && ($time == $row['time'])){
             //// Already Booked
             $dublicate = true;
           }
@@ -166,33 +159,24 @@ if(isset($_GET['delete'])){
               }
             }
           ?>
-          <div>
-            <label for="busNo">Micro number </label>
+          <div class="form-group mt-4">
+            <label for="busNo"><b>Select Micro number:</b></label>
             <select type="select" name="busNo" class="form-control" id="busNo">
-              <!-- <option selected value="<?php //echo $row['BG']; ?>"><?php //echo $row['BG']; ?></option> -->
-              <!-- <option value="-select-">-select-</option> -->
-              <option value="1">1 (Noon)</option>
-              <option value="2">2 (Afternoon)</option>
-              <option value="3">3 (Noon)</option>
-              <option value="4">4 (Afternoon)</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
             </select>
           </div>
-          <div>
-            <!-- <label for="dotw">Day of the Week</label>
-            <select type="select" name="dotw" class="form-control" id="dotw"> -->
-              <!-- <option selected value="<?php //echo $row['BG']; ?>"><?php //echo $row['BG']; ?></option> -->
-              <!-- <option value="-select-">-select-</option> -->
-              <!-- <option selected value="Monday">Monday</option>
-              <option value="Tuesday">Tuesday</option>
-              <option value="Wednesday">Wednesday</option>
-              <option value="Thursday">Thursday</option>
-              <option value="Friday">Friday</option>
-              <option value="Saturday">Saturday</option>
-              <option value="Sunday">Sunday</option>
-            </select> -->
+          <div class="form-group">
+            <label for="time"><b>Select time:</b></label>
+            <select type="select" name="time" class="form-control" id="time">
+              <option selected value="Noon">Noon</option>
+              <option value="Evening">Evening</option>
+            </select>
           </div>
-          <div>
-            <label for="date">Select date:</label>
+          <div class="form-group">
+            <label for="date"><b>Select date:</b></label>
             <input
               type="date"
               name="date"

@@ -3,7 +3,7 @@
   include 'partials/_dbconnect.php';
   session_start();
   if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
-    header("location: loginPage2.php");
+    header("location: loginPage.php");
     exit;
   }
 
@@ -20,13 +20,13 @@
     $DoB = mysqli_real_escape_string($conn, $_POST['dateOfBirth']);
     $BG = mysqli_real_escape_string($conn, $_POST['bloodGroup']);
     $gender = mysqli_real_escape_string($conn, $_POST['gender']);
-    $shift = mysqli_real_escape_string($conn, $_POST['DayEvening']);
     $MS = mysqli_real_escape_string($conn, $_POST['maritalStatus']);
     $religion = mysqli_real_escape_string($conn, $_POST['religion']);
     $nationality = mysqli_real_escape_string($conn, $_POST['nationality']);
     $nid = mysqli_real_escape_string($conn, $_POST['nid']);
     
     if($teacher){
+      $shift = mysqli_real_escape_string($conn, $_POST['DayEvening']);
       $sql = "UPDATE `picpost` SET `name` = '$name' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
       $result = mysqli_query($conn, $sql);
       $sql = "UPDATE `basicinfot` SET `name` = '$name', `DoB` = '$DoB', `BG` = '$BG', `gender` = '$gender', `shift` = '$shift', `MS` = '$MS', `religion` = '$religion', `nationality` = '$nationality', `nid` = '$nid' WHERE `basicinfot`.`loginIdT` = '{$_SESSION['loginID']}' ";
@@ -36,7 +36,7 @@
       $result = mysqli_query($conn, $sql);
       $sql = "UPDATE `microinfo` SET `name` = '$name' WHERE `microinfo`.`loginIdD` = '{$_SESSION['loginID']}' ";
       $result = mysqli_query($conn, $sql);
-      $sql = "UPDATE `basicinfod` SET `name` = '$name', `DoB` = '$DoB', `BG` = '$BG', `gender` = '$gender', `shift` = '$shift', `MS` = '$MS', `religion` = '$religion', `nationality` = '$nationality', `nid` = '$nid' WHERE `basicinfod`.`loginIdD` = '{$_SESSION['loginID']}' ";
+      $sql = "UPDATE `basicinfod` SET `name` = '$name', `DoB` = '$DoB', `BG` = '$BG', `gender` = '$gender',`MS` = '$MS', `religion` = '$religion', `nationality` = '$nationality', `nid` = '$nid' WHERE `basicinfod`.`loginIdD` = '{$_SESSION['loginID']}' ";
     }
 
     $result = mysqli_query($conn, $sql);
@@ -98,9 +98,10 @@
 
     <nav class="Pnavbar mb-5">
       <ul>
-        <li><a class="active" href="isp/MyInfoT.php">Basic Information</a></li>
-        <li><a href="T_contactinfo.php">Contact Information</a></li>
-        <li><a href="T_post&eduinfo.php">Post &amp; Educational Info</a></li>
+        <li><a class="active" href="isp/MyInfo.php">Basic Information</a></li>
+        <li><a href="contactinfo.php">Contact Information</a></li>
+        <li><a href="post&eduinfo.php">Post &amp; Educational Info</a></li>
+        <li><a href="passwordChangeByUser.php">Password Change (self)</a></li>
       </ul>
     </nav>
 
@@ -145,9 +146,8 @@
                   name="bloodGroup"
                   class="form-control"
                   id="bloodGroup"
-                >
-                  <option selected value="<?php echo $row['BG']; ?>"><?php echo $row['BG']; ?></option>
-                  <option value="-select-">-select-</option>
+                  >
+                  <option value="-select-" selected >-select-</option>
                   <option value="A-">A-</option>
                   <option value="A+">A+</option>
                   <option value="B-">B-</option>
@@ -157,6 +157,9 @@
                   <option value="O-">O-</option>
                   <option value="O+">O+</option>
                 </select>
+                <script type="text/javascript">
+                  document.getElementById('bloodGroup').value = "<?php echo $row['BG'];?>";
+                </script>
               </div>
               <div>
                 <label for="gender"
@@ -168,27 +171,35 @@
                   class="form-control"
                   id="gender"
                 >
-                  <option selected value="<?php echo $row['gender']; ?>"><?php echo $row['gender']; ?></option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Others">Others</option>
                 </select>
+                <script type="text/javascript">
+                  document.getElementById('gender').value = "<?php echo $row['gender'];?>";
+                </script>
               </div>
-              <div>
-                <label for="DayEvening"
-                  >Day/Evening <span style="color: red"> *</span>
-                </label>
-                <select
-                  type="select"
-                  name="DayEvening"
-                  class="form-control"
-                  id="DayEvening"
-                >
-                  <option selected value="<?php echo $row['shift']; ?>"><?php echo $row['shift']; ?></option>
-                  <option value="Day">Day</option>
-                  <option value="Evening">Evening</option>
-                </select>
-              </div>
+              <?php
+                if($teacher){
+                  echo '<div>
+                          <label for="DayEvening"
+                            >Day/Evening <span style="color: red"> *</span>
+                          </label>
+                          <select
+                            type="select"
+                            name="DayEvening"
+                            class="form-control"
+                            id="DayEvening"
+                          >
+                            <option value="Day">Day</option>
+                            <option value="Evening">Evening</option>
+                          </select>
+                          <script type="text/javascript">
+                            document.getElementById("DayEvening").value = "';?><?php echo $row["shift"];?><?php echo '";
+                          </script>
+                        </div>                ';
+                        }
+              ?>
             </div>
 
             <!-- Right Side Form -->
@@ -201,11 +212,13 @@
                   class="form-control"
                   id="maritalStatus"
                 >
-                  <option selected value="<?php echo $row['MS']; ?>"><?php echo $row['MS']; ?></option>
                   <option value="-Select-">-Select</option>
                   <option value="Married">Married</option>
                   <option value="Unmarried">Unmarried</option>
                 </select>
+                <script type="text/javascript">
+                  document.getElementById("maritalStatus").value = "<?php echo $row["MS"];?>";
+                </script>
               </div>
               <div>
                 <label for="religion">Religion </label>
@@ -215,13 +228,15 @@
                   class="form-control"
                   id="religion"
                 >
-                  <option selected value="<?php echo $row['religion']; ?>"><?php echo $row['religion']; ?></option>
                   <option value="Islam">Islam</option>
                   <option value="Hinduism">Hinduism</option>
                   <option value="Christianity">Christianity</option>
                   <option value="Buddhism">Buddhism</option>
                   <option value="Other">Other</option>
                 </select>
+                <script type="text/javascript">
+                  document.getElementById("religion").value = "<?php echo $row["religion"];?>";
+                </script>
               </div>
               <div>
                 <label for="nationality"
@@ -233,7 +248,6 @@
                   class="form-control"
                   id="nationality"
                 >
-                  <option selected value="<?php echo $row['nationality']; ?>"><?php echo $row['nationality']; ?></option>
                   <option value="">Select Country</option>
                   <option value="Afghanistan">Afghanistan</option>
                   <option value="Albania">Albania</option>
@@ -434,6 +448,9 @@
                   <option value="Zambia">Zambia</option>
                   <option value="Zimbabwe">Zimbabwe</option>
                 </select>
+                <script type="text/javascript">
+                  document.getElementById("nationality").value = "<?php echo $row["nationality"];?>";
+                </script>
               </div>
               <div>
                 <label for="nid">NID</label>

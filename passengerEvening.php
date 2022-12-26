@@ -2,21 +2,25 @@
 
 $submit = false;
 $duplicate = false;
+$WrongTime = false;
+$WrongDate = false;
+
 $date = date('Y-m-d');
-
-$datetime = new DateTime( "now", new DateTimeZone( "Asia/Dhaka" ) );
-if(((int) $datetime->format( 'H')) >= 14){
-  echo 'yes';
-}else{
-  echo 'no';
-}
-
+//// checking if logged in or not
 include 'partials/_dbconnect.php';
 session_start();
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
-  header("location: loginPage2.php");
+  header("location: loginPage.php");
   exit;
 }
+
+?>
+
+<?php
+  ////current date tracker
+  $NowDate =  new DateTime( "now", new DateTimeZone( "Asia/Dhaka"));
+  $NowDateInString = strtotime($NowDate->format( 'Y-m-d'));
+  $FixedTimeInString = strtotime(' 18:00');
 
 ?>
 
@@ -26,28 +30,36 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       $date = $_POST['date'];
     }
     if(isset($_POST['submit'])){
-      $subDate = $_POST['subDate'];
-      ////checking time
-      // $datetime = new DateTime( "now", new DateTimeZone( "Asia/Dhaka" ) );
-      // if(((int) $datetime->format( 'H')) >= 14){
-      //   echo 'yes';
-      // }else{
-      //   echo 'no';
-      // }
-
-      $sql = "SELECT * FROM `counter` WHERE `loginIdD` = '{$_SESSION['loginID']}' AND `date` = '$subDate' ";
-      $result = mysqli_query($conn, $sql);
-      $num = mysqli_num_rows($result);
-      if($num>0){
-        $duplicate = true;
-        // echo $date;
-        // echo $subDate;
-      }
-      else{
-        $sql = "INSERT INTO `counter` (`sn`, `loginIdD`, `date`, `done`) VALUES (NULL, '{$_SESSION['loginID']}', '$subDate', 'done'); ";
-        $result = mysqli_query($conn, $sql);
-        $submit = true;
-        // echo $date;
+      //// Current time tracker
+      $DriverGivenDate = $_POST['subDate'];
+      $DriverGivenDateInString = strtotime($DriverGivenDate);
+      $NowTimeInString = strtotime($NowDate->format(' H:i'));
+      
+      //// Compairing date
+      if($DriverGivenDateInString == $NowDateInString){
+        //// Compairing time
+        if($NowTimeInString >= $FixedTimeInString){
+          //// double submission check
+          $sql = "SELECT * FROM `counter` WHERE `loginIdD` = '{$_SESSION['loginID']}' AND `date` = '$DriverGivenDate' AND `time` = 'Evening' ";
+          $result = mysqli_query($conn, $sql);
+          $num = mysqli_num_rows($result);
+          if($num>0){
+            $duplicate = true;
+            // echo $subDate;
+          }
+          else{
+            $sql = "INSERT INTO `counter` (`sn`, `loginIdD`, `date`, `time`, `done`) VALUES (NULL, '{$_SESSION['loginID']}', '$DriverGivenDate', 'Evening', 'done'); ";
+            $result = mysqli_query($conn, $sql);
+            $submit = true;
+          }
+        }
+        else{
+          // echo 'not done <br>';
+          $WrongTime = true;
+        }
+      }else{
+        // echo 'not same <br>';
+        $WrongDate = true;
       }
     }
   }
@@ -73,6 +85,28 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <link rel="stylesheet" href="CSS/homet2.css" />
     <link rel="stylesheet" href="CSS/passenger.css" />
     <link rel="stylesheet" href="CSS/bookmicro.css" />
+    <link rel="stylesheet" href="CSS/MyProfileNav.css" />
+    
+    <style>
+      .Pnavbar {
+        max-width:300px; 
+        border-radius: 9px; 
+        justify-content: center;
+      }
+      .Pnavbar li a {
+        padding-right: 54px; 
+        padding-left: 54px;
+      }
+      .Pnavbar li a:hover {
+        background-color: rgb(202, 201, 201);
+        border-radius: 9px 0px 0px 9px !important;
+      }
+      .Pnavbar li a.active {
+        background-color: #963fbd;
+        color: azure;
+        border-radius: 0px 9px 9px 0px !important;
+      }
+    </style>
 
     <title>My passengers</title>
   </head>
@@ -100,7 +134,32 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
               </button>
             </div>';
     }
+    if($WrongDate){
+      echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Error!</strong> You can not submit this days passenger list!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>';
+    }
+    if($WrongTime){
+      echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Error!</strong> You are early. You have to submit after told time!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>';
+    }
     ?>
+
+    <nav class="Pnavbar mb-5">
+      <ul>
+        <li><a href="PassengerNoon.php">Noon</a></li>
+        <li><a class="active" href="passengerEvening.php">Evening</a></li>
+      </ul>
+    </nav>
+
+    <!-- Body Content -->
     <div class="body" style="max-width: 1200px;">
       <div class="Lcol">
         <div class="container my-4">
@@ -136,7 +195,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                 <tbody>
                   <!-- php MySQL query -->
                   <?php
-                    $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '{$_SESSION['busNo']}' AND `date` LIKE '$date' AND `time` LIKE '{$_SESSION['shift']}' ";
+                    $sql = "SELECT * FROM `bookmicro` WHERE `busNo` = '{$_SESSION['busNo']}' AND `date` LIKE '$date' AND `time` LIKE 'Evening' ";
                     $result = mysqli_query($conn,$sql);
                     // $num = mysqli_num_rows($result);
                     $sn = 0;
@@ -157,7 +216,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                 <input type="hidden" name="subDate" value="<?php echo $date;?>">
                 </tbody>
               </table>
-              <input type="submit" name="submit" class="btnS" id="submit" value="Done"/>
+              <input type="submit" name="submit" class="btnS" id="submit" value="Submit"/>
               <!-- onclick="return confirm('Do you really want to submit todays passenger list?\nYou can not resubmit!');" -->
             </div>
           </div>
