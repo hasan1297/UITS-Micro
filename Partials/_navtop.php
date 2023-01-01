@@ -3,6 +3,9 @@
 ////   selecting user   ////
 require 'partials/_user.php';
 
+if($admin){
+  $sql = "SELECT * FROM `basicinfoAd` WHERE `loginId` = '{$_SESSION['loginID']}'";
+}
 if($teacher){
   $sql = "SELECT * FROM `basicinfot` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
 }
@@ -27,6 +30,9 @@ echo '<script>0</script>
             </div>
             ';?>
   <?php 
+  if($admin){
+    $sql = "SELECT * FROM `picpostAd` WHERE `loginId` = '{$_SESSION['loginID']}'";
+  }
   if($teacher){
     $sql = "SELECT * FROM `picpost` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
   }
@@ -55,6 +61,10 @@ echo '<script>0</script>
     if($teacher){
       echo '<li><a href="/isp/MicroInfo.php">Micro Info</a></li>
             <li><a href="/isp/BookMicro.php">Book Micro</a></li>';
+    }
+    if($admin){
+      echo '<li><a href="/isp/adTdata.php">Teacher</a></li>
+            <li><a href="/isp/adDdata.php">Driver</a></li>';
     }
       echo '<li><a href="/isp/myinfo.php">My Profile</a></li>
           </ul>

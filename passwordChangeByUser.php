@@ -100,8 +100,8 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       <ul>
         <li><a href="myinfo.php">Basic Information</a></li>
         <li><a href="contactinfo.php">Contact Information</a></li>
-        <li><a class="active" href="post&eduinfo.php">Post &amp; Educational Info</a></li>
-        <li><a href="passwordChangeByUser.php">Password Change (self)</a></li>
+        <li><a href="post&eduinfo.php">Post &amp; Educational Info</a></li>
+        <li><a class="active" href="passwordChangeByUser.php">Password Change (self)</a></li>
       </ul>
     </nav>
 

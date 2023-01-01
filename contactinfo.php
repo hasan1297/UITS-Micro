@@ -21,6 +21,11 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     $Amobile = mysqli_real_escape_string($conn, $_POST['Amobile']);
     $Aemail = mysqli_real_escape_string($conn, $_POST['Aemail']);
 
+    if($admin){
+      $sql = "UPDATE `picpostAd` SET `mobile` = '$mobile', `email` = '$email' WHERE `picpostAd`.`loginId` = '{$_SESSION['loginID']}' ";
+      $result = mysqli_query($conn, $sql);
+      $sql = "UPDATE `contactinfoAd` SET `mobile` = '$mobile', `email` = '$email', `Amobile` = '$Amobile', `Aemail` = '$Aemail' WHERE `contactinfoAd`.`loginId` = '{$_SESSION['loginID']}' ";
+    }
     if($teacher){
       $sql = "UPDATE `picpost` SET `mobile` = '$mobile', `email` = '$email' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
       $result = mysqli_query($conn, $sql);
@@ -103,6 +108,9 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       <!-- Left Side Form -->
       <form action="" method="post">
         <?php
+          if($admin){
+            $sql = "SELECT * FROM `contactinfoAd` WHERE `loginId` = '{$_SESSION['loginID']}'";
+          }
           if($teacher){
             $sql = "SELECT * FROM `tcontactinfo` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
           }

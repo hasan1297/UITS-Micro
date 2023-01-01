@@ -1,5 +1,6 @@
 <?php
 ////    selecting the use  ////
+$admin = false;
 $teacher = false;
 $driver = false;
 if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=true){
@@ -16,6 +17,14 @@ if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=true){
     $num = mysqli_num_rows($result);
     if($num == 1){
       $driver = true; //driver
+    }
+    elseif($num == 0){
+      $sql = "SELECT * FROM `login` WHERE `loginId` = '{$_SESSION['loginID']}'";
+      $result = mysqli_query($conn, $sql);
+      $num = mysqli_num_rows($result);
+      if($num == 1){
+        $admin = true; //driver
+      }
     }
   } 
 } 

@@ -61,12 +61,27 @@ if ($result){
 $sql = "CREATE TABLE dlogin(
 loginIdD INT(10) AUTO_INCREMENT PRIMARY KEY,
 busNo  VARCHAR(11) NOT NULL,
+root  VARCHAR(255) NOT NULL,
 password  VARCHAR(255) NOT NULL,
 dt  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )";
 $result = mysqli_query($conn,$sql);
 if ($result){
   echo "yes dlogin<br>";
+}
+
+// contactinfoAd
+$sql = "CREATE TABLE contactinfoAd(
+sn INT(11) AUTO_INCREMENT PRIMARY KEY,
+loginId INT(10) NOT NULL,
+mobile  VARCHAR(20) NOT NULL,
+email   VARCHAR(50) NOT NULL,
+Amobile   VARCHAR(20) NOT NULL,
+Aemail   VARCHAR(50) NOT NULL
+)";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes contactinfoAd<br>";
 }
 
 // tcontactinfo
@@ -95,6 +110,25 @@ Aemail   VARCHAR(50) NOT NULL
 $result = mysqli_query($conn,$sql);
 if ($result){
   echo "yes dcontactinfo<br>";
+}
+
+//  basicinfot
+$sql = "CREATE TABLE basicinfoAd
+(
+sn INT(11) AUTO_INCREMENT PRIMARY KEY,
+loginId INT(10) NOT NULL,
+name   VARCHAR(50) NOT NULL,
+DoB   DATETIME NULL DEFAULT NULL,
+BG   VARCHAR(10) NOT NULL DEFAULT '-Select-',
+gender   VARCHAR(10) NOT NULL DEFAULT 'Male',
+MS   VARCHAR(10) NOT NULL DEFAULT '-Select-',
+religion   VARCHAR(15) NOT NULL DEFAULT 'Islam',
+nationality   VARCHAR(50) NOT NULL DEFAULT 'Bangladesh',
+nid   VARCHAR(20) NOT NULL
+)";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes basicinfoAd<br>";
 }
 
 //  basicinfot
@@ -213,6 +247,26 @@ if ($result){
   echo "yes picpostd<br>";
 }
 
+//  picpostAd
+$sql = "CREATE TABLE picpostAd
+(
+sn INT(11) AUTO_INCREMENT PRIMARY KEY,
+loginId INT(10) NOT NULL,
+photo   VARCHAR(255) NOT NULL DEFAULT 'nn',
+name   VARCHAR(50) NOT NULL,
+mobile  VARCHAR(20) NOT NULL,
+email  VARCHAR(50) NOT NULL,
+degree1  VARCHAR(255) NOT NULL,
+degree2 VARCHAR(255) NOT NULL,
+degree3  VARCHAR(255) NOT NULL,
+degree4  VARCHAR(255) NOT NULL,
+degree5  VARCHAR(255) NOT NULL
+)";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes picpostAd<br>";
+}
+
 //  counter
 $sql = "CREATE TABLE counter
 (
@@ -229,6 +283,20 @@ if ($result){
 
 
 ////  connecting foreign key
+//  basicinfoAd and login
+$sql = "ALTER TABLE `basicinfoAd` ADD FOREIGN KEY (`loginId`) REFERENCES `login`(`loginId`) ON DELETE CASCADE ON UPDATE CASCADE";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  basicinfoAd and login <br>";
+}
+
+//  contactinfoAd and login
+$sql = "ALTER TABLE `contactinfoAd` ADD FOREIGN KEY (`loginId`) REFERENCES `login`(`loginId`) ON DELETE CASCADE ON UPDATE CASCADE";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  contactinfoAd and login <br>";
+}
+
 //  basicinfot and tlogin
 $sql = "ALTER TABLE `basicinfot` ADD FOREIGN KEY (`loginIdT`) REFERENCES `tlogin`(`loginIdT`) ON DELETE CASCADE ON UPDATE CASCADE";
 $result = mysqli_query($conn,$sql);
@@ -300,6 +368,13 @@ if ($result){
 
 ////  changing the starting point
 //  tlogin
+$sql = "ALTER TABLE `login` AUTO_INCREMENT=19145501";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  login<br>";
+}
+
+//  tlogin
 $sql = "ALTER TABLE `tlogin` AUTO_INCREMENT=1914551001";
 $result = mysqli_query($conn,$sql);
 if ($result){
@@ -315,6 +390,13 @@ if ($result){
 
 
 ////  inserting data into table
+//  login
+$sql = "INSERT INTO `login` (`loginId`, `password`, `dt`) VALUES (NULL, 'admin', current_timestamp())";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  login admin id<br>";
+}
+
 //  tlogin
 $sql = "INSERT INTO `tlogin` (`loginIdT`, `password`, `dt`) VALUES (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp()), (NULL, '1234', current_timestamp())";
 $result = mysqli_query($conn,$sql);
@@ -323,10 +405,24 @@ if ($result){
 }
 
 //  dlogin
-$sql = "INSERT INTO `dlogin` (`loginIdD`, `busNo`, `password`, `dt`) VALUES (NULL, '1', '1234', current_timestamp()), (NULL, '2', '1234', current_timestamp()), (NULL, '3', '1234', current_timestamp()), (NULL, '4', '1234', current_timestamp())";
+$sql = "INSERT INTO `dlogin` (`loginIdD`, `busNo`, `root`, `password`, `dt`) VALUES (NULL, '1', '', '1234', current_timestamp()), (NULL, '2', '', '1234', current_timestamp()), (NULL, '3', '', '1234', current_timestamp()), (NULL, '4', '', '1234', current_timestamp())";
 $result = mysqli_query($conn,$sql);
 if ($result){
   echo "yes  dlogin 4 ids<br><br>";
+}
+
+//  basicinfoAd
+$sql = "INSERT INTO `basicinfoAd` (`sn`, `loginId`, `name`, `DoB`, `BG`, `gender`, `MS`, `religion`, `nationality`, `nid`) VALUES (NULL, '19145501', 'Admin', NULL, '-Select-', 'Male', '-Select-', 'Islam', 'Bangladesh', '')";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  basicinfoAd data<br>";
+}
+
+//  contactinfoAd
+$sql = "INSERT INTO `contactinfoAd` (`sn`, `loginId`, `mobile`, `email`, `Amobile`, `Aemail`) VALUES (NULL, '19145501', '01612971914', 'admin@gmail.com', '', '')";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  contactinfoAd data<br>";
 }
 
 //  basicinfot
@@ -359,7 +455,7 @@ if ($result){
 
 
 ////  microinfo data entry
-$sql = "INSERT INTO `microinfo` (`sn`, `loginIdD`, `busNo`, `shift`, `root`, `name`, `mobile`) VALUES (NULL, '14551001', '1', 'Noon', '', 'Kala Mia', '01954563521'), (NULL, '14551002', '2', 'Afternoon', '', 'Dhola Mia', '01355662235'), (NULL, '14551003', '3', 'Noon', '', 'Chan Mia', '01614569852'), (NULL, '14551004', '4', 'Afternoon', '', 'Shona Mia', '01987654321')";
+$sql = "INSERT INTO `microinfo` (`sn`, `loginIdD`, `busNo`, `shift`, `root`, `name`, `mobile`) VALUES (NULL, '14551001', '1', 'Noon', 'UITS ⇄ Natun Bazar ⇄ Badda ⇄ Rampura ⇄ Malibagh ⇄ Khilgaon ⇄ Bashabo ⇄ Mugda ⇄ Maniknagar ⇄ Sayedabad ⇄ Jatrabari', 'Kala Mia', '01954563521'), (NULL, '14551002', '2', 'Afternoon', 'UITS ⇄ Natun Bazar ⇄ Nadda ⇄ Bashundhara ⇄ Kuril Bishwa Road ⇄ Shewra Bazar ⇄ MES ⇄  ECB Square ⇄ Kalshi ⇄ Purobi ⇄ Mirpur 11 ⇄ Mirpur 10 ⇄ Mirpur 2 ⇄ Sony Hall ⇄ Mirpur 1', 'Dhola Mia', '01355662235'), (NULL, '14551003', '3', 'Noon', '', 'Chan Mia', '01614569852'), (NULL, '14551004', '4', 'Afternoon', '', 'Shona Mia', '01987654321')";
 $result = mysqli_query($conn,$sql);
 if ($result){
   echo "yes  microinfo data<br><br><br>Bookmicro data entry--><br>";
@@ -378,6 +474,14 @@ if ($result){
 // while($row = mysqli_fetch_assoc($result)){
   
 // }
+
+
+////  picpostAd data entry
+$sql = "INSERT INTO `picpostAd` (`sn`, `loginId`, `photo`, `name`, `mobile`, `email`, `degree1`, `degree2`, `degree3`, `degree4`, `degree5`) VALUES (NULL, '19145501', 'nn', 'Admin', '01612971914', 'admin@gmail.com', '', '', '', '', '')";
+$result = mysqli_query($conn,$sql);
+if ($result){
+  echo "yes  picpostAd data<br><br><br>picpostd data entry--><br>";
+}
 
 
 ////  picpost data entry

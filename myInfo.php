@@ -25,6 +25,13 @@
     $nationality = mysqli_real_escape_string($conn, $_POST['nationality']);
     $nid = mysqli_real_escape_string($conn, $_POST['nid']);
     
+    if($admin){
+      $sql = "UPDATE `picpostAd` SET `name` = '$name' WHERE `picpostAd`.`loginId` = '{$_SESSION['loginID']}' ";
+      $result = mysqli_query($conn, $sql);
+      // $sql = "UPDATE `microinfo` SET `name` = '$name' WHERE `microinfo`.`loginIdD` = '{$_SESSION['loginID']}' ";
+      // $result = mysqli_query($conn, $sql);
+      $sql = "UPDATE `basicinfoAd` SET `name` = '$name', `DoB` = '$DoB', `BG` = '$BG', `gender` = '$gender',`MS` = '$MS', `religion` = '$religion', `nationality` = '$nationality', `nid` = '$nid' WHERE `basicinfoAd`.`loginId` = '{$_SESSION['loginID']}' ";
+    }
     if($teacher){
       $shift = mysqli_real_escape_string($conn, $_POST['DayEvening']);
       $sql = "UPDATE `picpost` SET `name` = '$name' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
@@ -98,7 +105,7 @@
 
     <nav class="Pnavbar mb-5">
       <ul>
-        <li><a class="active" href="isp/MyInfo.php">Basic Information</a></li>
+        <li><a class="active" href="myInfo.php">Basic Information</a></li>
         <li><a href="contactinfo.php">Contact Information</a></li>
         <li><a href="post&eduinfo.php">Post &amp; Educational Info</a></li>
         <li><a href="passwordChangeByUser.php">Password Change (self)</a></li>
@@ -111,6 +118,9 @@
       <!-- Left Side Form -->
       <form action="" method="post">
         <?php
+        if($admin){
+          $sql = "SELECT * FROM `basicinfoAd` WHERE `loginId` = '{$_SESSION['loginID']}'";
+        }
         if($teacher){
           $sql = "SELECT * FROM `basicinfot` WHERE `loginIdT` = '{$_SESSION['loginID']}'";
         }
@@ -147,7 +157,8 @@
                   class="form-control"
                   id="bloodGroup"
                   >
-                  <option value="-select-" selected >-select-</option>
+                  <!-- <option value="-select-" selected ><?php //echo $row['BG'];?></option> -->
+                  <option value="-Select-">-Select-</option>
                   <option value="A-">A-</option>
                   <option value="A+">A+</option>
                   <option value="B-">B-</option>
@@ -158,7 +169,7 @@
                   <option value="O+">O+</option>
                 </select>
                 <script type="text/javascript">
-                  document.getElementById('bloodGroup').value = "<?php echo $row['BG'];?>";
+                  document.getElementById("bloodGroup").value = "<?php echo $row["BG"];?>";
                 </script>
               </div>
               <div>
@@ -212,7 +223,7 @@
                   class="form-control"
                   id="maritalStatus"
                 >
-                  <option value="-Select-">-Select</option>
+                  <option value="-Select-">-Select-</option>
                   <option value="Married">Married</option>
                   <option value="Unmarried">Unmarried</option>
                 </select>
@@ -460,15 +471,9 @@
             }
           }
               ?>
-              <div>
-                <input
-                  type="submit"
-                  name="submit"
-                  class="btn"
-                  id="submit"
-                  value="Save"
-                />
-              </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+
             </div>
       </form>
     </div>

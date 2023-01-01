@@ -19,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $_SESSION['loggedin'] = true;
         $_SESSION['loginID'] = $LoginId;
         $_SESSION['name'] = $name;
-        header("location: MyInfo.php");
+        header("location: Home.php");
       }
       else{
       $showError = "Invalid credentials."; 

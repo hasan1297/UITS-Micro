@@ -68,6 +68,9 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
           }
         }
         else{ //no image
+          if($admin){
+          $sql = "UPDATE `picpostAd` SET `dept` = '$dept', `post` = '$post', `degree1` = '$degree1', `degree2` = '$degree2', `degree3` = '$degree3', `degree4` = '$degree4', `degree5` = '$degree5' WHERE `picpostAd`.`loginId` = '{$_SESSION['loginID']}' ";
+          }
           if($teacher){
           $sql = "UPDATE `picpost` SET `dept` = '$dept', `post` = '$post', `degree1` = '$degree1', `degree2` = '$degree2', `degree3` = '$degree3', `degree4` = '$degree4', `degree5` = '$degree5' WHERE `picpost`.`loginIdT` = '{$_SESSION['loginID']}' ";
           }
