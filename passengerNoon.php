@@ -88,7 +88,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     
     <style>
       .Pnavbar {
-        max-width:300px; 
+        max-width:305px; 
         border-radius: 9px; 
         justify-content: center;
       }
@@ -151,6 +151,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     }
     ?>
 
+    <!-- Inner NavBar -->
     <nav class="Pnavbar mb-5">
       <ul>
         <li><a class="active" href="PassengerNoon.php">Noon</a></li>

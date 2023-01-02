@@ -1,6 +1,14 @@
 <?php
 
+$update = false;
 $delete = false;
+$dlogin = false;
+$dcontactinfo = false;
+$basicinfod = false;
+$bookmicro = false;
+$microinfo = false;
+$picpostd = false;
+$counter = false;
 
 include 'partials/_dbconnect.php';
 session_start();
@@ -12,22 +20,62 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
 
 <?php
 if(isset($_GET['delete'])){
-  $sn = $_GET['delete'];
-  // $delete = true;
-  // $sql = "DELETE FROM `dlogin` WHERE `loginIdD` = $ID";
-  // $result = mysqli_query($conn, $sql);
-  // $sql = "DELETE FROM `dcontactinfo` WHERE `loginIdD` = $ID";
-  // $result = mysqli_query($conn, $sql);
-  // $sql = "DELETE FROM `basicinfod` WHERE `loginIdD` = $ID";
-  // $result = mysqli_query($conn, $sql);
-  // $sql = "DELETE FROM `bookmicro` WHERE `loginIdD` = $ID";
-  // $result = mysqli_query($conn, $sql);
-  // $sql = "DELETE FROM `microinfo` WHERE `loginIdD` = $ID";
-  // $result = mysqli_query($conn, $sql);
-  // $sql = "DELETE FROM `picpostd` WHERE `loginIdD` = $ID";
-  // $result = mysqli_query($conn, $sql);
-  // $sql = "DELETE FROM `counter` WHERE `loginIdD` = $ID";
-  // $result = mysqli_query($conn, $sql);
+  $ID = $_GET['delete'];
+  $sql = "DELETE FROM `dlogin` WHERE `loginIdD` = $ID";
+  $result = mysqli_query($conn, $sql);
+  if(!$result){
+  $dlogin = true;
+  }
+  $sql = "DELETE FROM `dcontactinfo` WHERE `loginIdD` = $ID";
+  $result = mysqli_query($conn, $sql);
+  if(!$result){
+    $dcontactinfo = true;
+  }
+  $sql = "DELETE FROM `basicinfod` WHERE `loginIdD` = $ID";
+  $result = mysqli_query($conn, $sql);
+  if(!$result){
+    $basicinfod = true;
+  }
+  $sql = "DELETE FROM `bookmicro` WHERE `loginIdD` = $ID";
+  $result = mysqli_query($conn, $sql);
+  if(!$result){
+    $bookmicro = true;
+  }
+  $sql = "DELETE FROM `microinfo` WHERE `loginIdD` = $ID";
+  $result = mysqli_query($conn, $sql);
+  if(!$result){
+    $microinfo = true;
+  }
+  $sql = "DELETE FROM `picpostd` WHERE `loginIdD` = $ID";
+  $result = mysqli_query($conn, $sql);
+  if(!$result){
+    $picpostd = true;
+  }
+  $sql = "DELETE FROM `counter` WHERE `loginIdD` = $ID";
+  $result = mysqli_query($conn, $sql);
+  if(!$result){
+    $counter = true;
+  }
+  if($result){
+    $delete = true;
+  }
+}
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+  if(isset($_POST['loginIdDEdit'])){
+    // Update the record
+    $ID = $_POST['loginIdDEdit'];
+    // $title = $_POST['titleEdit'];
+    $newPassword = $_POST['passwordEdit'];
+    //sql query to be executed
+    $sql ="UPDATE `dlogin` SET `password` = '$newPassword' WHERE `dlogin`.`loginIdD` = '$ID'";
+    $result = mysqli_query($conn, $sql);
+    if($result){
+      $update = true;
+    }
+    else{
+      echo "Failed to Updated record successfully! <br>";
+    }
+  }
 }
 ?>
 
@@ -59,6 +107,34 @@ if(isset($_GET['delete'])){
         <!-- css first -->
     <script>0</script>
 
+    <!-- Edit modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editModalLabel">Edit Password</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="/isp/adDLoginTable.php" method="POST" style="min-width: fit-content;">
+            <div class="modal-body">
+              <input type="hidden" name="loginIdDEdit" id="loginIdDEdit">
+              <div class="form-group">
+                <label for="passwordEdit">Password</label>
+                <input type="text" name="passwordEdit" class="form-control" id="passwordEdit" />
+              </div>
+            </div>
+            <div class="modal-footer d-block mr-auto">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- Header -->
     <?php require 'partials/_navtop.php'?>
 
@@ -74,9 +150,73 @@ if(isset($_GET['delete'])){
     </nav>
 
     <?php
+      if($dlogin){
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> There were some problem with Table dlogin in the DATABASE!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+      }
+      if($dcontactinfo){
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> There were some problem with Table dcontactinfo in the DATABASE!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+      }
+      if($basicinfod){
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> There were some problem with Table basicinfod in the DATABASE!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+      }
+      if($bookmicro){
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> There were some problem with Table bookmicro in the DATABASE!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+      }
+      if($microinfo){
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> There was a problem with Table microinfo in the DATABASE!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+      }
+      if($picpostd){
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> There was a problem with Table picpostd in the DATABASE!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+      }
+      if($counter){
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> There was a problem with Table counter in the DATABASE!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+      }
       if($delete){
         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> Your note has been deleteded successfully!
+                <strong>Success!</strong> Your selected ID has been deleted successfully from the DataBase!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>';
+      }
+      if($update){
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> Password has been Updated successfully in the DataBase!
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -146,14 +286,29 @@ if(isset($_GET['delete'])){
       });
     </script>
     <script>
+      edits = document.getElementsByClassName('edit');
+      Array.from(edits).forEach((element) => {
+        element.addEventListener("click", (e) => {
+          console.log("edit ");
+          tr = e.target.parentNode.parentNode;
+          password = tr.getElementsByTagName("td")[1].innerText;
+          console.log(password);
+          passwordEdit.value = password;
+          loginIdDEdit.value = e.target.id;
+          console.log(e.target.id);
+          $('#editModal').modal('toggle');
+        })
+      })
+
+
       deletes = document.getElementsByClassName('delete');
       Array.from(deletes).forEach((element)=>{
         element.addEventListener("click", (e) => {
           console.log("edit ");
-          sn = e.target.id.substr(1);
+          loginIdD = e.target.id.substr(1);
           if(confirm("Are you sure you want to remove this booking!")){
             console.log("yes");
-            window.location = `/isp/bookMicro.php?delete=${sn}`;
+            window.location = `/isp/adDLoginTable.php?delete=${loginIdD}`;
           }
           else{
             console.log("no");

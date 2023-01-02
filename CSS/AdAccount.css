@@ -1,0 +1,43 @@
+body {
+  font-size: 14px;
+}
+.alert {
+  margin-left: auto;
+  margin-right: auto;
+}
+.body {
+  margin-top: -55px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.Lcol {
+  margin-top: 15px;
+  width: 21%;
+  margin: 3.33%;
+  float: left;
+}
+.Mcol {
+  width: 44%;
+  margin: 3.34%;
+  float: left;
+}
+.Rcol {
+  width: 15%;
+  margin: 3.33%;
+  float: left;
+}
+.date {
+  display: flex;
+  column-gap: 15px;
+}
+.btnSub {
+  padding: 0.25rem 0.5rem;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 7px !important;
+  margin-left: 7px !important;
+  border-radius: 0.2rem;
+  background-color: #007bff;
+  border: 0;
+  color: white;
+}
