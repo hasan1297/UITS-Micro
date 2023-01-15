@@ -3,6 +3,8 @@ $dublicate = false;
 $noseat = false;
 $booked = false;
 $delete = false;
+$WrongTime = false;
+$WrongDate = false;
 
 include 'partials/_dbconnect.php';
 session_start();
@@ -11,12 +13,92 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
   exit;
 }
 ?>
+
+<?php
+  ////current date tracker
+  $NowDate =  new DateTime( "now", new DateTimeZone( "Asia/Dhaka"));
+  $NowDateInString = strtotime($NowDate->format( 'Y-m-d'));
+  // $FixedTimeInString = strtotime(' 11:00');
+  $FixedTimeInStringForNoon = strtotime(' 11:00');
+  $FixedTimeInStringForEvening = strtotime(' 17:00');
+
+?>
+
 <?php
 if(isset($_GET['delete'])){
   $sn = $_GET['delete'];
-  $delete = true;
-  $sql = "DELETE FROM `bookmicro` WHERE `sn` = $sn";
-  $result = mysqli_query($conn, $sql);
+  $shift = $_COOKIE['shift'];
+  // echo $shift;
+
+  //// Current time tracker
+  $DriverGivenDate = $_COOKIE['date'];
+  $DriverGivenDateInString = strtotime($DriverGivenDate);
+  $NowTimeInString = strtotime($NowDate->format(' H:i'));
+
+  //// Compairing date
+  if($DriverGivenDateInString == $NowDateInString){
+    if($shift == 'Noon'){
+      //// Compairing time
+      if($NowTimeInString < $FixedTimeInStringForNoon){
+        //// deleting
+        $sql = "DELETE FROM `bookmicro` WHERE `sn` = $sn";
+        $result = mysqli_query($conn, $sql);
+        $delete = true;
+      }
+      else{
+        // echo 'not done <br>';
+        $WrongTime = true;
+      }
+    }
+    if($shift == 'Evening'){
+      //// Compairing time
+      if($NowTimeInString < $FixedTimeInStringForEvening){
+        //// deleting
+        $sql = "DELETE FROM `bookmicro` WHERE `sn` = $sn";
+        $result = mysqli_query($conn, $sql);
+        $delete = true;
+      }
+      else{
+        // echo 'not done <br>';
+        $WrongTime = true;
+      }
+    }
+
+  }
+  elseif($DriverGivenDateInString > $NowDateInString){
+    if($shift == 'Noon'){
+      //// Compairing time
+      if($NowTimeInString < $FixedTimeInStringForNoon){
+        //// deleting
+        $sql = "DELETE FROM `bookmicro` WHERE `sn` = $sn";
+        $result = mysqli_query($conn, $sql);
+        $delete = true;
+      }
+      else{
+        // echo 'not done <br>';
+        $WrongTime = true;
+      }
+    }
+    if($shift == 'Evening'){
+      //// Compairing time
+      if($NowTimeInString < $FixedTimeInStringForEvening){
+        //// deleting
+        $sql = "DELETE FROM `bookmicro` WHERE `sn` = $sn";
+        $result = mysqli_query($conn, $sql);
+        $delete = true;
+      }
+      else{
+        // echo 'not done <br>';
+        $WrongTime = true;
+      }
+    }
+
+  }
+  else{
+    // echo 'not same <br>';
+    $WrongDate = true;
+  }
+
 }
 ?>
 <?php
@@ -130,6 +212,22 @@ if(isset($_GET['delete'])){
                   </button>
                 </div>';
         }
+        if($WrongDate){
+          echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Error!</strong> You can not delete this booking!
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>';
+        }
+        if($WrongTime){
+          echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Error!</strong> You are late. You have to delete atleast 1 hour before departuree!!!
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>';
+        }
         ?>
     </div>
     
@@ -159,23 +257,23 @@ if(isset($_GET['delete'])){
               }
             }
           ?>
-          <div class="form-group mt-4">
+          <div class="form-group mt-4" style="max-width: 280px;">
             <label for="busNo"><b>Select Micro number:</b></label>
             <select type="select" name="busNo" class="form-control" id="busNo">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
+              <option value="1">1 (Jatrabari)</option>
+              <option value="2">2 (Mirpur 11)</option>
+              <option value="3">3 (Mohakhali)</option>
+              <option value="4">4 (Azampur)</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-group" style="max-width: 280px;">
             <label for="time"><b>Select time:</b></label>
             <select type="select" name="time" class="form-control" id="time">
               <option selected value="Noon">Noon</option>
               <option value="Evening">Evening</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-group" style="max-width: 280px;">
             <label for="date"><b>Select date:</b></label>
             <input
               type="date"
@@ -218,8 +316,8 @@ if(isset($_GET['delete'])){
                   echo "<tr>
                           <td>". $sn. "</td>
                           <td>". $row['busNo']. "</td>
-                          <td>". $row['date']. "</td>
-                          <td>". $row['time']. "</td>
+                          <td class='D'>". $row['date']. "</td>
+                          <td class='S'>". $row['time']. "</td>
                           <td><button class='delete btn btn-sm btn-primary' id=d". $row['sn'].">Delete</button></td>
                           </tr>";
                         }
@@ -245,6 +343,19 @@ if(isset($_GET['delete'])){
       });
     </script>
     <script>
+
+
+      $(".delete").click(function() {
+        var $row = $(this).closest("tr");    // Find the row
+        var date = $row.find(".D").text();    //Find the value
+        var shift = $row.find(".S").text();    //Find the value
+        document.cookie = "date = " + date;
+        document.cookie = "shift = " + shift;
+        // Let's test it out
+        //alert(shift);
+      });
+
+
       deletes = document.getElementsByClassName('delete');
       Array.from(deletes).forEach((element)=>{
         element.addEventListener("click", (e) => {
@@ -253,15 +364,24 @@ if(isset($_GET['delete'])){
           if(confirm("Are you sure you want to remove this booking!")){
             console.log("yes");
             window.location = `/isp/bookMicro.php?delete=${sn}`;
-            //Creat a form and use post method to submit a form
           }
           else{
             console.log("no");
           }
         })
       })
+
     </script>
 
+    <script>
+        let current_url = document.location;
+        document.querySelectorAll(".navbar .color").forEach(function(e){
+          if(e.href == current_url){
+              e.classList += " current";
+          }
+        });
+    </script>
+    
   </body>
 
 </html>

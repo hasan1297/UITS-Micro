@@ -89,6 +89,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <link rel="stylesheet" href="CSS/infoEntry.css" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
+    <style>
+      .at {
+        background-color: #575050;
+        color: #ffffff !important;
+      }
+    </style>
+
     <title>Home</title>
   </head>
   <body>
@@ -132,7 +139,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <li><a href="adTdata.php">Data Entry</a></li>
         <li><a href="adTBasicTable.php">Basic</a></li>
         <li><a href="adTContactTable.php">Contact</a></li>
-        <li><a href="adTPost&EducationTableerehsome">Post &amp; Education</a></li>
+        <li><a href="adTPost&EducationTable.php">Post &amp; Education</a></li>
         <li><a class="active" href="adTLoginTable.php">Password</a></li>
       </ul>
     </nav>
@@ -224,7 +231,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         <th scope='row'>". $sn. "</th>
                         <td>". $row['loginIdT']. "</td>
                         <td>". $row['password']. "</td>
-                        <td><button class='edit btn btn-sm btn-primary' id=". $row['loginIdT'].">Edit</button> <button class='delete btn btn-sm btn-primary' id=d". $row['loginIdT'].">Delete</button></td>
+                        <td style='min-width: 110px;''><button class='edit btn btn-sm btn-primary' id=". $row['loginIdT'].">Edit</button> <button class='delete btn btn-sm btn-primary' id=d". $row['loginIdT'].">Delete</button></td>
                       </tr>";
               }
             ?>
@@ -284,5 +291,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         })
       })
     </script>
+
+    <script>
+        let current_url = document.location;
+        document.querySelectorAll(".navbar .color").forEach(function(e){
+          if(e.href == current_url){
+              e.classList += " current";
+          }
+        });
+    </script>
+    
   </body>
 </html>

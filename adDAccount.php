@@ -65,6 +65,10 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         color: azure;
         border-radius: 0px 9px 9px 0px !important;
       }
+      .ada {
+        background-color: #575050;
+        color: #ffffff !important;
+      }
     </style>
 
     <title>Home</title>
@@ -85,9 +89,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     </nav>
 
     <!-- body -->
-
     <div class="body" style="max-width: 1600px; min-width: 1600px; flex-direction: row;">
-
       <div class="Lcol">
         <div class="container my-4">
           <form action="" method="post">
@@ -127,6 +129,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         </div>
       </div>
 
+      <!-- Table -->
       <div class="Mcol">
         <div style="max-width: 900px;">
           <div class="container my-4">
@@ -139,11 +142,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                   <th scope="col">Date</th>
                   <th scope="col">Time</th>
                   <th scope="col">Done</th>
-                  <!-- <th scope="col">Marital Status</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Religion</th>
-                  <th scope="col">Nationality</th>
-                  <th scope="col">NID</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -162,11 +160,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                             <td>". $row['done']. "</td>
                             </tr>";
                           }
-                          //<td>". $row['name']. "</td>
-                          // <td>". $row['MS']. "</td>
-                          // <td>". $row['religion']. "</td>
-                          // <td>". $row['nationality']. "</td>
-                          // <td>". $row['nid']. "</td>
                 ?>
 
               </tbody>
@@ -246,5 +239,15 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         $('#myTable').DataTable();
       });
     </script>
+
+    <script>
+        let current_url = document.location;
+        document.querySelectorAll(".navbar .color").forEach(function(e){
+          if(e.href == current_url){
+              e.classList += " current";
+          }
+        });
+    </script>
+    
   </body>
 </html>

@@ -5,9 +5,7 @@ body {
 }
 .top {
   display: flex;
-  /* border: 1px solid grey; */
   padding: 5px;
-  /* background-color: #407bae91; */
 }
 .right {
   margin-left: auto;
@@ -39,23 +37,21 @@ body {
 }
 .navbar li a {
   padding: 13px 23px 10px 23px;
-  /* padding: 3px 3px; */
   text-decoration: none;
   color: black;
   font-size: 14px;
 }
 .navbar li a:hover {
-  background-color: rgb(150, 144, 144);
+  background-color: rgb(168, 165, 165);
   color: rgb(233, 233, 233);
 }
-/* .navbar li a:active {
-  background-color: rgb(150, 144, 144);
-  color: rgb(233, 233, 233);
-} */
-/* .navbar > .active > a {
-  background-color: rgb(150, 144, 144);
-  color: rgb(233, 233, 233);
-} */
+
+/* Change background color of navbar links for current page */
+.color.current {
+  background-color: #575050;
+  color: #ffffff;
+}
+
 .bottom {
   width: 80%;
   text-align: center;

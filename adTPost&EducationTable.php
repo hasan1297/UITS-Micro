@@ -6,10 +6,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
   header("location: loginPage.php");
   exit;
 }
-?>
-
-<?php
-
 
 ?>
 
@@ -34,6 +30,13 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <link rel="stylesheet" href="CSS/MyProfileNav.css" />
     <link rel="stylesheet" href="CSS/infoEntry.css" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+    <style>
+      .at {
+        background-color: #575050;
+        color: #ffffff !important;
+      }
+    </style>
 
     <title>Home</title>
   </head>
@@ -130,5 +133,15 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         $('#myTable').DataTable();
       });
     </script>
+
+    <script>
+        let current_url = document.location;
+        document.querySelectorAll(".navbar .color").forEach(function(e){
+          if(e.href == current_url){
+              e.classList += " current";
+          }
+        });
+    </script>
+    
   </body>
 </html>

@@ -128,5 +128,15 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         $('#myTable').DataTable();
       });
     </script>
+
+    <script>
+        let current_url = document.location;
+        document.querySelectorAll(".navbar .color").forEach(function(e){
+          if(e.href == current_url){
+              e.classList += " current";
+          }
+        });
+    </script>
+    
   </body>
 </html>

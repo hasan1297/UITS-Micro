@@ -53,24 +53,23 @@ echo '<script>0</script>
         </div>
         <nav class="navbar">
           <ul>
-            <li><a href="/isp/Home.php">Home</a></li>';
+            <li><a class="color ah" href="/isp/Home.php">Home</a></li>';
     if($driver){
-      echo '<li><a href="/isp/passengerNoon.php">Passenger</a></li>';
-      echo '<li><a href="/isp/DAccount.php">My Account</a></li>';
+      echo '<li><a class="color ne" href="/isp/passengerNoon.php">Passenger</a></li>';
+      echo '<li><a class="color" href="/isp/DAccount.php">My Account</a></li>';
     }
     if($teacher){
-      echo '<li><a href="/isp/MicroInfo.php">Micro Info</a></li>
-            <li><a href="/isp/BookMicro.php">Book Micro</a></li>';
+      echo '<li><a class="color" href="/isp/MicroInfo.php">Microbus Info</a></li>
+            <li><a class="color" href="/isp/BookMicro.php">Book Micro</a></li>';
     }
     if($admin){
-      echo '<li><a href="/isp/adTdata.php">Teacher</a></li>
-            <li><a href="/isp/adDdata.php">Driver</a></li>
-            <li><a href="/isp/adTAccount.php">Accounts</a></li>';
+      echo '<li><a class="color at" href="/isp/adTdata.php">Teacher</a></li>
+            <li><a class="color ad" href="/isp/adDdata.php">Driver</a></li>
+            <li><a class="color ada" href="/isp/adTAccount.php">Accounts</a></li>';
     }
-      echo '<li><a href="/isp/myinfo.php">My Profile</a></li>
+      echo '<li><a class="color mi" href="/isp/myinfo.php">My Profile</a></li>
           </ul>
         </nav>
       </header>';
-
 
 ?>

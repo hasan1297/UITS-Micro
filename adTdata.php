@@ -51,8 +51,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
             </button>
           </div>';
     }
-
-    echo $name;
   }
 
 ?>
@@ -78,6 +76,12 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <link rel="stylesheet" href="CSS/MyProfileNav.css" />
     <link rel="stylesheet" href="CSS/infoEntry.css" />
 
+    <style>
+      .at {
+        background-color: #575050;
+        color: #ffffff !important;
+      }
+    </style>
 
     <title>Home</title>
   </head>
@@ -100,12 +104,12 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     </nav>
 
     <!-- body -->
-    <div class="body" style="max-width: 1200px;">
+    <div class="body" style="max-width: 900px;">
       <form action="" method="post">
         <div class="form-group row">
-          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <label for="name" class="col-sm-2 col-form-label">Name <span style="color: red"> *</span></label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="name" name="name">
+            <input type="text" class="form-control" id="name" name="name" required>
           </div>
         </div>
         <div class="form-group row">
@@ -155,9 +159,9 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
           </div>
         </div>
         <div class="form-group row">
-          <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
+          <label for="mobile" class="col-sm-2 col-form-label">Mobile <span style="color: red"> *</span></label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="mobile" name="mobile">
+            <input type="text" class="form-control" id="mobile" name="mobile" required>
           </div>
         </div>
         <!-- <div class="form-group row">
@@ -192,5 +196,15 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script>
+        let current_url = document.location;
+        document.querySelectorAll(".navbar .color").forEach(function(e){
+          if(e.href == current_url){
+              e.classList += " current";
+          }
+        });
+    </script>
+    
   </body>
 </html>

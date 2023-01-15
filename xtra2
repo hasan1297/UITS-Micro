@@ -2,11 +2,7 @@ value="<?php echo date('Y-m-d');
 
 UITS ⇄ Natun Bazar ⇄ Nadda ⇄ Bashundhara ⇄ Kuril Bishwa Road ⇄ Shewra Bazar ⇄ MES ⇄  ECB Square ⇄ Kalshi ⇄ Purobi ⇄ Mirpur 11 ⇄ Mirpur 10 ⇄ Mirpur 2 ⇄ Sony Hall ⇄ Mirpur 1
 Notun Bazar ⇄ Nadda ⇄ Bashundhara ⇄ Jamuna Future Park ⇄ Kuril Bishwa Road. BRTC. Route: Kamalapur - Motijheel - Gulistan
-<form action='/isp/bookMicro.php' method='post'>
-  <th scope='row'>". $sn. "</th>
-  <td>". $row['loginIdD']. "</td>
-  <td>". $row['password']. "</td>
-  <td>". $row['busNo']. "</td>
-  <td>". $row['root']. "</td>
-  <td><button class='edit btn btn-sm btn-primary' id=". $row['loginIdD'].">Edit</button> <button class='delete btn btn-sm btn-primary' id=d". $row['loginIdD'].">Delete</button></td>
-</form>
+Agargaon ⇄ Zia Uddyan ⇄ Bijoy Sarani ⇄ Jahangir Gate ⇄ Mohakhali ⇄ Wireless ⇄ Gulshan 1 ⇄ Badda Link Road ⇄ Bashtola ⇄ Shahjadpur ⇄ 
+UITS ⇄ Notun Bazar ⇄ Uttar Badda ⇄ Shahjadpur ⇄ Bashtola ⇄ Badda Link Road ⇄ Gulshan 1 ⇄ Wireless ⇄ Mohakhali
+UITS ⇄ Notun Bazar ⇄ Nadda ⇄ Bashundhara ⇄ Jamuna Future Park ⇄ Kuril Bishwa Road ⇄ Khilkhet ⇄ Airport ⇄ Jashimuddin (Uttara) ⇄ Rajlakshmi ⇄ Azampur
+  ⇄ House Building ⇄ Abdullahpur ⇄ Tongi

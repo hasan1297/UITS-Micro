@@ -1,5 +1,9 @@
 <?php
-T
+
+$FDofTmonth = date('Y-m-01'); // hard-coded '01' for first day
+// $LDofTmonth  = date('Y-m-t'); // for last day of the month
+$LDofTmonth  = date('Y-m-d');
+$ID = "00";
 
 include 'partials/_dbconnect.php';
 session_start();
@@ -48,8 +52,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         min-width: 440px;
         border-radius: 9px; 
         justify-content: center;
-        margin-right:580px;
-        margin-left:580px;
       }
       .Pnavbar li a {
         padding-right: 54px; 
@@ -63,6 +65,10 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         background-color: #963fbd;
         color: azure;
         border-radius: 9px 0px 0px 9px !important;
+      }
+      .ada {
+        background-color: #575050;
+        color: #ffffff !important;
       }
     </style>
 
@@ -126,9 +132,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       </div>
     </div>
 
-        <!-- <h3>BookMicro Table</h3> -->
-
-      <!-- <div class="container my-4" style="max-width: 1000px; min-width: 1000px;"> -->
+      <!-- Table -->
       <div class="Mcol">
         <div style="max-width: 900px;">
           <div class="container my-4">
@@ -142,10 +146,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                   <th scope="col">Bus No</th>
                   <th scope="col">Date</th>
                   <th scope="col">Time</th>
-                  <!-- <th scope="col">Marital Status</th>
-                  <th scope="col">Religion</th>
-                  <th scope="col">Nationality</th>
-                  <th scope="col">NID</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -165,10 +165,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                             <td>". $row['time']. "</td>
                             </tr>";
                           }
-                          // <td>". $row['MS']. "</td>
-                          // <td>". $row['religion']. "</td>
-                          // <td>". $row['nationality']. "</td>
-                          // <td>". $row['nid']. "</td>
                 ?>
               </tbody>
             </table>
@@ -241,5 +237,15 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         $('#myTable').DataTable();
       });
     </script>
+
+    <script>
+        let current_url = document.location;
+        document.querySelectorAll(".navbar .color").forEach(function(e){
+          if(e.href == current_url){
+              e.classList += " current";
+          }
+        });
+    </script>
+    
   </body>
 </html>

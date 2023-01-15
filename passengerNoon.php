@@ -105,6 +105,10 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         color: azure;
         border-radius: 9px 0px 0px 9px !important;
       }
+      .ne {
+        background-color: #575050;
+        color: #ffffff !important;
+      }
     </style>
 
     <title>My passengers</title>
@@ -183,6 +187,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
           <div style="max-width: 900px;">
             <div class="container my-4">
               <h5 class="h5 mb-3">Your passengers for <?php echo $date?>:</h5>
+              <h6 class="mb-3"><span style="color: red">Submission must be done within the day and also after the depurture time !!!</span></h6>
               <table class="table" id="myTable">
                 <thead>
                   <tr>
@@ -236,6 +241,15 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       var now = new Date();
       var inputElementTime = document.getElementsByName("time")[0];
       inputElementTime.value = ("0" + now.getHours()).slice(-2) + ":" + ("0" + now.getMinutes()).slice(-2);
+    </script>
+
+    <script>
+        let current_url = document.location;
+        document.querySelectorAll(".navbar .color").forEach(function(e){
+          if(e.href == current_url){
+              e.classList += " current";
+          }
+        });
     </script>
     
   </body>
