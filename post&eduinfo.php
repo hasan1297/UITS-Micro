@@ -136,7 +136,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       }
     </style>
 
-    <title>My Info</title>
+    <title>My profile</title>
   </head>
   <body>
         <!-- css first -->

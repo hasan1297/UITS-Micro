@@ -100,7 +100,7 @@
       }
     </style>
 
-    <title>My Info</title>
+    <title>My profile</title>
   </head>
   <body id="Mb">
 

@@ -56,11 +56,12 @@ echo '<script>0</script>
             <li><a class="color ah" href="/isp/Home.php">Home</a></li>';
     if($driver){
       echo '<li><a class="color ne" href="/isp/passengerNoon.php">Passenger</a></li>';
-      echo '<li><a class="color" href="/isp/DAccount.php">My Account</a></li>';
+      echo '<li><a class="color" href="/isp/MyAccount.php">My Account</a></li>';
     }
     if($teacher){
       echo '<li><a class="color" href="/isp/MicroInfo.php">Microbus Info</a></li>
-            <li><a class="color" href="/isp/BookMicro.php">Book Micro</a></li>';
+            <li><a class="color" href="/isp/BookMicro.php">Book Micro</a></li>
+            <li><a class="color" href="/isp/MyAccount.php">My Account</a></li>';
     }
     if($admin){
       echo '<li><a class="color at" href="/isp/adTdata.php">Teacher</a></li>

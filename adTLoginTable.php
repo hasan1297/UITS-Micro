@@ -96,7 +96,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       }
     </style>
 
-    <title>Home</title>
+    <title>Teacher's Password</title>
   </head>
   <body>
     <!-- css first -->

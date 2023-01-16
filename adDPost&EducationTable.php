@@ -35,7 +35,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <link rel="stylesheet" href="CSS/infoEntry.css" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 
-    <title>Home</title>
+    <title>Driver's Piture & Education Information</title>
   </head>
   <body>
         <!-- css first -->
@@ -50,7 +50,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         <li><a href="adDdata.php">Data Entry</a></li>
         <li><a href="adDBasicTable.php">Basic</a></li>
         <li><a href="adDContactTable.php">Contact</a></li>
-        <li><a  class="active" href="adDPost&EducationTable.php">Post &amp; Education</a></li>
+        <li><a  class="active" href="adDPost&EducationTable.php">Picture &amp; Education</a></li>
         <li><a href="adDLoginTable.php">Password</a></li>
       </ul>
     </nav>

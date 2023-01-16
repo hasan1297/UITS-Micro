@@ -90,7 +90,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       }
     </style>
 
-    <title>Home</title>
+    <title>Driver's New Entry</title>
   </head>
   <body>
         <!-- css first -->
@@ -105,7 +105,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         <li><a class="active" href="adDdata.php">Data Entry</a></li>
         <li><a href="adDBasicTable.php">Basic</a></li>
         <li><a href="adDContactTable.php">Contact</a></li>
-        <li><a href="adDPost&EducationTable.php">Post &amp; Education</a></li>
+        <li><a href="adDPost&EducationTable.php">Picture &amp; Education</a></li>
         <li><a href="adDLoginTable.php">Password</a></li>
       </ul>
     </nav>

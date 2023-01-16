@@ -38,7 +38,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       }
     </style>
 
-    <title>Home</title>
+    <title>Teacher's Contact Information</title>
   </head>
   <body>
         <!-- css first -->

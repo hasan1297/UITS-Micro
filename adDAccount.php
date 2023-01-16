@@ -71,7 +71,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       }
     </style>
 
-    <title>Home</title>
+    <title>Driver's Account</title>
   </head>
   <body>
         <!-- css first -->

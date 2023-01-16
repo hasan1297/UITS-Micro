@@ -289,7 +289,6 @@ if(isset($_GET['delete'])){
       </div>
 
 
-
       <!-- Right Side Form -->
       <div class="Rcol">
         <h5 class="h5 mb-3">Seat you booked:</h5>
@@ -319,8 +318,8 @@ if(isset($_GET['delete'])){
                           <td class='D'>". $row['date']. "</td>
                           <td class='S'>". $row['time']. "</td>
                           <td><button class='delete btn btn-sm btn-primary' id=d". $row['sn'].">Delete</button></td>
-                          </tr>";
-                        }
+                        </tr>";
+                }
               ?>
             </tbody>
           </table>

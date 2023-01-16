@@ -94,7 +94,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
       }
     </style>
 
-    <title>Password Change (Self)</title>
+    <title>My profile</title>
   </head>
   <body>
         <!-- css first -->

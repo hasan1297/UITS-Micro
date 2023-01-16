@@ -112,7 +112,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       }
     </style>
 
-    <title>Home</title>
+    <title>Driver's Password</title>
   </head>
   <body>
         <!-- css first -->
@@ -155,7 +155,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <li><a href="adDdata.php">Data Entry</a></li>
         <li><a href="adDBasicTable.php">Basic</a></li>
         <li><a href="adDContactTable.php">Contact</a></li>
-        <li><a href="adDPost&EducationTable.php">Post &amp; Education</a></li>
+        <li><a href="adDPost&EducationTable.php">Picture &amp; Education</a></li>
         <li><a class="active" href="adDLoginTable.php">Password</a></li>
       </ul>
     </nav>

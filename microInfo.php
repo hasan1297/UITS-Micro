@@ -29,7 +29,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
     <link rel="stylesheet" href="CSS/MyProfileBody.css" />
     <link rel="stylesheet" href="CSS/table.css" />
 
-    <title>Micro Info</title>
+    <title>MicroBus Info</title>
   </head>
   <body>
         <!-- css first -->
